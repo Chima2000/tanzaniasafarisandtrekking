@@ -37,5 +37,5 @@ it('lets an admin update a managed website page', function () {
     $this->get(route('about'))
         ->assertOk()
         ->assertSee('Our Tanzania Story', false)
-        ->assertSee('We guide safaris and Kilimanjaro climbs.', false);
+        ->assertSeeText('We guide safaris and Kilimanjaro climbs.');
 });

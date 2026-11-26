@@ -24,7 +24,7 @@ it('serves an independent safari packages page', function () {
     $response->assertSee('package-category-intro', false);
     $response->assertSee('Tanzania Safari Packages Across Serengeti, Ngorongoro &amp; Tarangire', false);
     $response->assertSee('Classic park combinations', false);
-    $response->assertSee('Tanzania Safari Packages | Serengeti, Ngorongoro &amp; Tarangire', false);
+    $response->assertSee('Tanzania Safari Packages | Serengeti, Ngorongoro & Tarangire');
     $response->assertSee('rel="canonical"', false);
     $response->assertSee(route('packages.safari', absolute: false), false);
 });
@@ -38,7 +38,7 @@ it('serves an independent kilimanjaro treks page', function () {
     $response->assertSee('package-category-intro', false);
     $response->assertSee('Kilimanjaro Trek Packages on Machame, Lemosho, Marangu &amp; More', false);
     $response->assertSee('Route by route clarity', false);
-    $response->assertSee('Kilimanjaro Trek Packages | Machame, Lemosho, Marangu &amp; More', false);
+    $response->assertSee('Kilimanjaro Trek Packages | Machame, Lemosho, Marangu & More');
 });
 
 it('serves an independent day trips page with sidebar filters', function () {

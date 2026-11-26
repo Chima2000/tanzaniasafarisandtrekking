@@ -46,5 +46,5 @@ it('lets an admin update website contact settings used on the public site', func
         ->assertOk()
         ->assertSee('+255 700 111 222', false)
         ->assertSee('hello@example.com', false)
-        ->assertSee('Safari experts in Northern Tanzania', false);
+        ->assertSeeText('Safari experts in Northern Tanzania');
 });

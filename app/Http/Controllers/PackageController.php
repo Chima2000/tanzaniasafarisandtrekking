@@ -157,8 +157,12 @@ class PackageController extends Controller
             'categoryLabel' => $definition['label'],
             'search' => $search,
             'pageTitle' => $pageTitle,
-            'seoTitle' => $managed['page']?->seo_title ?: $definition['seo_title'],
-            'seoDescription' => $managed['page']?->seo_description ?: $definition['seo_description'],
+            'seoTitle' => $category === null
+                ? ($managed['page']?->seo_title ?: $definition['seo_title'])
+                : $definition['seo_title'],
+            'seoDescription' => $category === null
+                ? ($managed['page']?->seo_description ?: $definition['seo_description'])
+                : $definition['seo_description'],
             'seoKeywords' => $definition['seo_keywords'],
             'canonicalUrl' => PackageCategories::url($category),
             'intro' => $intro,

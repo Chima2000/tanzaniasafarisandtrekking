@@ -24,8 +24,6 @@ class SeoController extends Controller
 
     public function sitemap(SitemapGenerator $sitemap): Response
     {
-        $xml = $sitemap->contents() ?? $sitemap->xml();
-
-        return response($xml, 200, ['Content-Type' => 'application/xml; charset=UTF-8']);
+        return response($sitemap->xml(), 200, ['Content-Type' => 'application/xml; charset=UTF-8']);
     }
 }

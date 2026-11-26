@@ -9,11 +9,19 @@
     $siteTitle = $siteSettings['company_name'] ?? 'Tanzania Safaris and Trekking';
     $pageSeo = $pageSeo ?? \App\Support\PageSeo::siteDefaults();
     $pageJsonLd = $pageJsonLd ?? [];
-    $resolvedTitle = trim($__env->yieldContent('title', $pageSeo['title']));
+    // yieldContent() HTML-escapes section values; decode once so {{ }} does not double-escape (&amp;amp;).
+    $yieldText = function (string $section, string $default = '') use ($__env): string {
+        return trim(html_entity_decode(
+            $__env->yieldContent($section, $default),
+            ENT_QUOTES | ENT_HTML5,
+            'UTF-8'
+        ));
+    };
+    $resolvedTitle = $yieldText('title', $pageSeo['title']);
     $gtmId = \App\Support\PageSeo::gtmId($siteSettings ?? null);
     $ga4Id = \App\Support\PageSeo::ga4Id($siteSettings ?? null);
-    $canonicalUrl = trim($__env->yieldContent('canonical', request()->getSchemeAndHttpHost().request()->getPathInfo()));
-    $ogImage = trim($__env->yieldContent('og_image', $pageSeo['og_image'] ?? ''));
+    $canonicalUrl = $yieldText('canonical', request()->getSchemeAndHttpHost().request()->getPathInfo());
+    $ogImage = $yieldText('og_image', $pageSeo['og_image'] ?? '');
 @endphp
 
 <title>{{ $resolvedTitle }}</title>
@@ -42,7 +50,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <meta property="og:type" content="@yield('og_type', 'website')">
 <meta property="og:site_name" content="{{ $siteTitle }}">
-<meta property="og:title" content="{{ trim($__env->yieldContent('og_title', $resolvedTitle)) }}">
+<meta property="og:title" content="{{ $yieldText('og_title', $resolvedTitle) }}">
 <meta property="og:description" content="@yield('og_description', $pageSeo['og_description'])">
 <meta property="og:url" content="{{ $canonicalUrl }}">
 @if ($ogImage !== '')
@@ -51,10 +59,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:locale" content="en_US">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ trim($__env->yieldContent('twitter_title', $resolvedTitle)) }}">
+<meta name="twitter:title" content="{{ $yieldText('twitter_title', $resolvedTitle) }}">
 <meta name="twitter:description" content="@yield('twitter_description', $pageSeo['og_description'])">
 @if ($ogImage !== '')
-<meta name="twitter:image" content="{{ trim($__env->yieldContent('twitter_image', $ogImage)) }}">
+<meta name="twitter:image" content="{{ $yieldText('twitter_image', $ogImage) }}">
 @endif
 
 <meta name="geo.region" content="TZ">
