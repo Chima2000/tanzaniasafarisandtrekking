@@ -1,0 +1,1539 @@
+/* Responsive Css */
+
+@media only screen and (max-width: 1749px){
+
+}
+
+
+@media only screen and (max-width: 1649px){
+  .header-style-four .menu-right-content .support-box{
+    display: none;
+  }
+
+  .banner-style-four .image-box{
+    right: 0px;
+  }
+}
+
+
+@media only screen and (max-width: 1599px){
+
+}
+
+
+@media only screen and (max-width: 1499px){
+  .header-style-two .menu-right-content .support-box{
+    display: none;
+  }
+
+  .main-header .outer-box{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .banner-style-four .image-box{
+    display: none;
+  }
+}
+
+
+@media only screen and (max-width: 1399px){
+  .main-header .outer-box .logo{
+    display: none;
+  }
+
+  .banner-section .banner-carousel .banner-navigation{
+    display: none;
+  }
+
+  .banner-style-two .right-column .right-content{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+
+@media only screen and (max-width: 1299px){
+  .banner-style-two .left-column{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .banner-style-two .left-column .left-content h2{
+    font-size: 50px;
+    line-height: 60px;
+  }
+}
+
+
+@media only screen and (max-width: 1200px){
+  .main-menu,
+  .sticky-header,
+  .main-header.style-one .outer-container:before{
+    display: none !important;
+  }
+
+  .mobile-nav-toggler{
+    display: block !important;
+  }
+
+  .header-top .top-inner{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .booking-section .inner-box{
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  .destinations-section .outer-container{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .journeys-section .content-box .single-item{
+    display: block;
+  }
+
+  .journeys-section .content-box .single-item .title-box{
+    margin-bottom: 30px;
+  }
+
+  .journeys-section .image-box{
+    margin-right: 0px;
+  }
+
+  .testimonial-section .bg-image{
+    display: none;
+  }
+
+  .testimonial-section .testimonial-content{
+    margin-right: 0px;
+  }
+
+  .megamenu ul li:first-child{
+    display: none;
+  }
+
+  .mobile-menu .megamenu .single-item .image-box{
+    display: none;
+  }
+
+  .mobile-menu .megamenu .single-item h4{
+    position: relative;
+    display: block;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    font-family: var(--text-font);
+    color: #fff;
+    text-transform: capitalize;
+    margin: 0px;
+  }
+
+  .mobile-menu .megamenu .single-item h4 a{
+    position: relative;
+    display: block;
+    color: #fff;
+    line-height: 24px;
+    padding: 10px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .banner-style-two .booking-form form{
+    padding-right: 0px;
+  }
+
+  .banner-style-two .booking-form form .message-btn{
+    position: relative;
+    width: 100%;
+  }
+
+  .banner-style-two .booking-form form .message-btn button[type='submit']{
+    width: 100%;
+    border-radius: 40px;
+    margin-top: 20px;
+  }
+
+  .sec-title p{
+    position: relative;
+    right: 0px;
+    bottom: 0px;
+    margin-top: 12px;
+  }
+
+  .working-section .outer-container{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .working-block-one{
+    display: block;
+  }
+
+  .working-block-one .count-box{
+    margin-bottom: 25px;
+  }
+
+  .testimonial-style-two .shape-box,
+  .news-style-two .shape-box,
+  .chooseus-style-two .shape-layer{
+    display: none;
+  }
+
+  .header-style-two .outer-container{
+    padding-left: 30px;
+  }
+
+  .news-block-three .post-info{
+    display: block;
+  }
+
+  .news-block-three .post-info li{
+    display: inline-flex;
+    margin-right: 5px;
+  }
+
+  .footer-style-three .footer-menu{
+    gap: 30px;
+  }
+
+  .header-style-three .outer-box,
+  .header-style-four .outer-box{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .menu-right-content .language-box .icon{
+    top: 0px;
+  }
+
+  .brand-section .title-text{
+    padding: 0px;
+  }
+
+  .brand-section .title-text::before,
+  .brand-section .title-text::after{
+    display: none;
+  }
+
+  .news-style-four .common-lower-text{
+    position: relative;
+    bottom: 0px;
+    display: block;
+  }
+
+  .travel-block-one .image-box .icon-box{
+    left: 30px;
+  }
+
+  .travel-block-one .image-box .text{
+    z-index: 1;
+  }
+
+  .package-sidebar{
+    margin-right: 0px;
+  }
+
+  .travel-block-two .inner-box .content-box .highlights-list{
+    display: block;
+  }
+
+  .travel-block-two .inner-box .content-box .highlights-list li{
+    display: inline-block;
+  }
+
+  .gallery-block-two .content-box p{
+    padding-left: 30px;
+    padding-right: 15px;
+  }
+
+  .comingsoon-section{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .news-block-one .lower-content .lower-box .post-info{
+    display: block;
+  }
+
+  .news-block-one .lower-content .lower-box .post-info li{
+    display: inline-flex;
+    margin-right: 5px;
+  }
+
+  .blog-sidebar{
+    margin-left: 0px;
+  }
+
+  .contact-section .info-box{
+    margin-right: 0px;
+  }
+
+  .banner-style-two .right-column .right-content .form-group{
+    z-index: 2;
+  }
+}
+
+
+@media only screen and (max-width: 991px){
+  .header-top .top-inner{
+    display: block;
+  }
+
+  .header-top .top-inner p,
+  .header-top .right-column{
+    justify-content: center;
+  }
+
+  .booking-section .booking-form{
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: transparent;
+  }
+
+  .sec-title .link-box{
+    position: relative !important;
+    margin-top: 10px;
+  }
+
+  .package-style-two .tabs-box{
+    overflow: visible;
+  }
+
+  .package-style-two .tab-btns .tab-btn{
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.10);
+  }
+
+  .journeys-section .image-box{
+    margin-bottom: 30px;
+  }
+
+  .chooseus-section .bg-image .bg-image-1{
+    display: none;
+  }
+
+  .testimonial-block-one .lower-box{
+    display: block;
+  }
+
+  .testimonial-block-one .lower-box .rating-box{
+    display: inline-flex;
+    margin-bottom: 15px;
+  }
+
+  .faq-sidebar{
+    margin-top: 40px;
+  }
+
+  .award-section .text-box{
+    margin-bottom: 30px;
+  }
+
+  .footer-widget{
+    margin: 0px 0px 30px 0px !important;
+  }
+
+  .footer-bottom .bottom-inner{
+    display: block;
+    text-align: center;
+  }
+
+  .footer-bottom .bottom-inner .social-links{
+    justify-content: center;
+    margin: 15px 0px;
+  }
+
+  .footer-bottom .right-column{
+    justify-content: center;
+  }
+
+  .banner-style-two .left-column{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding-top: 150px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .header-style-two .menu-right-content .text{
+    color: var(--title-color);
+  }
+
+  .header-style-two .menu-right-content .sidebar-toggler{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    background-color: var(--secondary-color);
+  }
+
+  .banner-style-two .right-column{
+    padding: 0px;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .banner-style-two .right-column .right-content{
+    padding-top: 100px;
+    min-height: auto;
+  }
+
+  .about-section .image-box{
+    margin-bottom: 30px;
+    padding-right: 0px;
+  }
+
+  .about-section .image-box .image-2{
+    right: 0px;
+  }
+
+  .about-section .content-box .feature-box{
+    padding-left: 0px;
+  }
+
+  .funfact-block-one{
+    border: none;
+  }
+
+  .travel-section .shape-box .shape-1{
+    display: none;
+  }
+
+  .travel-style-two .lower-box{
+    display: block;
+    text-align: center;
+  }
+
+  .working-block:nth-child(even) .working-block-one .count-box{
+    bottom: 0px;
+  }
+
+  .working-block-one{
+    margin-bottom: 30px;
+  }
+
+  .working-section{
+    padding-bottom: 82px;
+  }
+
+  .footer-style-two .footer-bottom .left-column{
+    display: block;
+  }
+
+  .footer-style-two .footer-bottom .scroll-to-target{
+    justify-content: center;
+    width: 100%;
+  }
+
+  .footer-style-two .footer-bottom p{
+    margin: 15px 0px;
+  }
+
+  .banner-style-three .content-box .booking-form .form-group{
+    width: 50%;
+  }
+
+  .award-block-one{
+    margin-bottom: 30px;
+  }
+
+  .package-style-two .tabs-box .inner-box{
+    display: block;
+  }
+
+  .chooseus-style-two .left-content .single-item .icon-box,
+  .chooseus-style-two .left-content .single-item:nth-child(2) .icon-box{
+    right: 0px;
+  }
+
+  .chooseus-style-two .image-box{
+    margin: 30px 0px;
+  }
+
+  .chooseus-style-two .right-content .single-item .icon-box,
+  .chooseus-style-two .right-content .single-item:nth-child(2) .icon-box{
+    left: 0px;
+  }
+
+  .news-style-three .shape-box .shape-2{
+    display: none;
+  }
+
+  .common-lower-text{
+    padding-top: 30px;
+  }
+
+  .subscribe-section .social-box{
+    text-align: left;
+    margin-top: 30px;
+  }
+
+  .subscribe-section .social-links{
+    justify-content: left;
+  }
+
+  .brand-section .shape{
+    display: none;
+  }
+
+  .footer-style-three .footer-menu{
+    display: block;
+  }
+
+  .footer-style-three .footer-menu li{
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .footer-style-three .language-box{
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .footer-style-three .footer-bottom .scroll-to-target{
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .booking-style-two .booking-form{
+    margin-bottom: 30px;
+  }
+
+  .news-style-four .outer-container{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .news-style-four .outer-container::before{
+    display: none;
+  }
+
+  .news-block-three .image-box{
+    margin-bottom: 30px;
+  }
+
+  .footer-style-four .footer-top .text-box{
+    margin-bottom: 30px;
+  }
+
+  .footer-style-four .form-inner .social-box{
+    justify-content: left;
+  }
+
+  .footer-bottom .footer-card{
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  .tour-details .tab-btns{
+    display: block;
+  }
+
+  .tour-details .tab-btns li{
+    display: inline-flex;
+    margin-bottom: 10px;
+  }
+
+  .tour-sidebar{
+    margin-top: 30px;
+  }
+
+  .tour-details .title-box{
+    display: block;
+  }
+
+  .filter-btns{
+    gap: 25px;
+  }
+
+  .faq-page-section .faq-sidebar{
+    margin-bottom: 40px;
+  }
+
+  .comingsoon-section .left-content,
+  .comingsoon-section .right-content{
+    width: 100%;
+  }
+
+  .comingsoon-section .outer-container{
+    display: block;
+  }
+
+  .comingsoon-section{
+    background-color: #edf2f5;
+  }
+
+  .comingsoon-section .left-content{
+    margin-bottom: 50px;
+  }
+
+  .error-section h1{
+    font-size: 300px;
+    line-height: 300px;
+  }
+
+  .error-section .content-box .shape,
+  .error-section .scroll-text{
+    display: none;
+  }
+
+  .blog-sidebar{
+    margin-top: 40px;
+  }
+
+  .contact-section .info-box .social-box{
+    top: 0px;
+    margin-bottom: 40px;
+  }
+
+  .contact-section .booking-form,
+  .contact-section .inner-container{
+    padding-bottom: 0px;
+  }
+
+  .booking-form .form-group.message-btn{
+    margin-bottom: 0px;
+  }
+
+  .location-section .map-inner{
+    position: relative;
+    width: 100%;
+    margin-bottom: 40px;
+    border-radius: 20px;
+  }
+
+  .location-section .inner-box{
+    margin-left: 0px;
+  }
+}
+
+@media only screen and (min-width: 768px){
+  .main-menu .navigation > li > ul,
+  .main-menu .navigation > li > ul > li > ul,
+  .main-menu .navigation > li > .megamenu{
+    display:block !important;
+    visibility:hidden;
+    opacity:0;
+  }
+
+  .main-menu .navigation > li > .megamenu{
+    display: flex !important;
+  }
+}
+
+
+@media only screen and (max-width: 767px){
+  .banner-carousel .content-box h2{
+    font-size: 50px;
+    line-height: 60px;
+  }
+
+  .banner-carousel .slide-item{
+    padding: 95px 0px 100px 0px;
+  }
+
+  .booking-section{
+    padding: 63px 0px 70px 0px;
+  }
+
+  .booking-section .inner-box .image{
+    display: none;
+  }
+
+  .categories-section{
+    background-color: var(--secondary-color);
+  }
+
+  .destinations-section .shape-box .shape-1{
+    display: none;
+  }
+
+  .categories-section,
+  .chooseus-section,
+  .testimonial-section{
+    padding: 63px 0px 40px 0px;
+  }
+
+  .sec-title h2{
+    font-size: 36px;
+    line-height: 46px;
+  }
+
+  .destinations-section{
+    padding-bottom: 55px;
+  }
+
+  .journeys-section,
+  .faq-section{
+    padding: 63px 0px 70px 0px;
+  }
+
+  .package-section,
+  .news-section{
+    padding: 63px 0px;
+  }
+
+  .testimonial-section .dots-style-one{
+    display: none;
+  }
+
+  .award-section h2{
+    font-size: 36px;
+    line-height: 46px;
+  }
+
+  .header-top-two .top-inner{
+    width: 100%;
+    padding-right: 0px;
+  }
+
+  .header-style-two .outer-container{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .banner-style-two .left-column{
+    padding-bottom: 100px;
+  }
+
+  .banner-style-two .right-column .right-content{
+    padding: 70px 15px 63px 15px;
+    min-height: auto;
+  }
+
+  .about-section{
+    padding: 70px 0px 63px 0px;
+  }
+
+  .about-section .content-box .inner-box .image{
+    margin-right: 0px;
+    margin-bottom: 30px;
+  }
+
+  .about-section .about-content{
+    padding-bottom: 0px;
+  }
+
+  .travel-section{
+    padding-bottom: 73px;
+  }
+
+  .swiper-pagination-bullets{
+    display: none !important;
+  }
+
+  .popular-section .outer-container,
+  .travel-style-two,
+  .gallery-section,
+  .team-section{
+    padding: 63px 0px;
+  }
+
+  .common-lower-text,
+  .travel-style-two .lower-box{
+    padding-top: 0px !important;
+  }
+
+  .working-section{
+    padding-top: 63px;
+    padding-bottom: 33px;
+  }
+
+  .sec-pad{
+    padding: 63px 0px 70px 0px;
+  }
+
+  .news-style-two{
+    padding-bottom: 40px;
+  }
+
+  .cta-section .inner-container{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .main-header .menu-right-content .user-box{
+    display: none;
+  }
+
+  .banner-style-three h2{
+    font-size: 50px;
+    line-height: 60px;
+  }
+
+  .banner-style-three .content-box .booking-form .form-group{
+    width: 100%;
+  }
+
+  .banner-style-three .content-box .booking-form form{
+    padding-right: 0px;
+  }
+
+  .banner-style-three .content-box .booking-form .message-btn{
+    position: relative;
+    top: 0px;
+    right: 0px;
+  }
+
+  .banner-style-three .content-box .booking-form .message-btn .theme-btn{
+    width: 100%;
+  }
+
+  .banner-style-three .content-box .booking-form{
+    border-radius: 20px;
+    padding: 40px 30px;
+  }
+
+  .banner-style-three .content-box .booking-form .form-group input, 
+  .banner-style-three .content-box .booking-form .form-group .nice-select{
+    border-right: none;
+    z-index: 2;
+  }
+
+  .banner-style-three .content-box .booking-form .form-group .nice-select .list{
+    z-index: 9;
+  }
+
+  .banner-style-three{
+    padding-bottom: 100px;
+  }
+
+  .wedo-section{
+    padding: 63px 0px;
+  }
+
+  .vibes-section .pattern-layer{
+    display: none;
+  }
+
+  .vibes-section{
+    padding-bottom: 63px;
+  }
+
+  .journey-section{
+    padding: 63px 0px 40px 0px;
+  }
+
+  .package-style-two .tab-btns{
+    margin-bottom: 30px;
+  }
+
+  .chooseus-style-two,
+  .gallery-style-two{
+    padding: 63px 0px;
+  }
+
+  .testimonial-style-three .outer-container{
+    padding-top: 63px;
+    padding-bottom: 40px;
+  }
+
+  .news-sidebar-content{
+    margin-bottom: 30px;
+  }
+
+  .footer-style-three .footer-top .content-box .image-1{
+    left: 0px;
+  }
+
+  .footer-style-three .footer-top .content-box .image-2{
+    right: 0px;
+  }
+
+  .header-style-four .header-lower .menu-right-content .language-box{
+    display: none;
+  }
+
+  .banner-style-four{
+    padding: 220px 0px 180px 0px;
+  }
+
+  .banner-style-four .shape-box{
+    display: none;
+  }
+
+  .banner-style-four .content-box h2{
+    font-size: 100px;
+    line-height: 110px;
+  }
+
+  .booking-style-two .booking-form .big-column{
+    padding-right: 0px;
+  }
+
+  .booking-style-two .booking-form .message-btn{
+    position: relative;
+  }
+
+  .booking-style-two .booking-form button[type='submit']{
+    position: relative;
+  }
+
+  .brand-section{
+    padding-top: 30px;
+  }
+
+  .highlights-section,
+  .funfact-section{
+    padding: 70px 0px 40px 0px;
+  }
+
+  .vibes-section.pt_110{
+    padding: 63px 0px;
+  }
+
+  .about-section.pb_80{
+    padding-bottom: 40px;
+  }
+
+  .news-style-four{
+    padding: 63px 0px 33px 0px;
+  }
+
+  .footer-style-four .footer-top{
+    padding-top: 80px;
+  }
+
+  .footer-style-four .widget-section{
+    padding-bottom: 50px;
+  }
+
+  .page-title{
+    padding: 93px 0px;
+  }
+
+  .page-title h1{
+    font-size: 50px;
+    line-height: 60px;
+  }
+
+  .popular-section{
+    padding-bottom: 70px;
+  }
+
+  .categories-section.alternate-2{
+    background-color: #fff;
+  }
+
+  .travel-section.pt_120{
+    padding: 70px 0px 33px 0px;
+  }
+
+  .sec-pad-3{
+    padding: 70px 0px !important;
+  }
+
+  .sec-pad-4{
+    padding: 70px 0px 40px 0px !important;
+  }
+
+  .filter-btns{
+    display: block;
+  }
+
+  .filter-btns li{
+    margin-right: 10px;
+  }
+
+  .comingsoon-section .right-content{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 100px;
+  }
+
+  .news-block-three .content-box{
+    margin-bottom: 30px;
+  }
+
+  .page-title h2 br{
+    display: none;
+  }
+
+  .page-title.pt_150.pb_150{
+    padding: 100px 0px;
+  }
+
+  .contact-section .booking-form{
+    padding-bottom: 30px;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.10);
+  }
+
+  .contact-section .inner-container{
+    overflow: visible;
+  }
+
+  .location-section{
+    padding-bottom: 65px;
+  }
+
+  .booking-section .rotate-box{
+    display: none;
+  }
+}
+
+
+@media only screen and (max-width: 599px){
+  .header-top .right-column{
+    display: block;
+    text-align: center;
+  }
+
+  .header-top .right-column .social-links{
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .booking-section .customer-box{
+    margin-bottom: 0px;
+  }
+
+  .news-section .lower-text{
+    display: block;
+  }
+
+  .travel-block-two .inner-box{
+    display: block;
+  }
+
+  .travel-block-two .inner-box .image-box{
+    margin-bottom: 30px;
+  }
+
+  .cta-section .content-box .btn-box{
+    display: block;
+  }
+
+  .cta-section .content-box .btn-box .theme-btn{
+    margin-bottom: 15px;
+  }
+
+  .banner-style-three .content-box .booking-form .form-group{
+    float: none;
+  }
+
+  .package-style-two .tabs-box{
+    padding-left: 0px;
+  }
+
+  .common-lower-text{
+    display: block;
+    text-align: center;
+  }
+
+  .subscribe-section .inner-container{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .banner-style-four .content-box .inner-box{
+    display: block;
+  }
+
+  .banner-style-four .content-box .inner-box .package-box{
+    margin-bottom: 30px;
+  }
+
+  .header-top .right-column .info-list{
+    padding-right: 0px;
+  }
+
+  .header-top .right-column .info-list::before{
+    display: none;
+  }
+
+  .main-footer .widget-section{
+    padding-bottom: 30px;
+  }
+
+  .tour-details .itinerary-content .single-item .inner-box{
+    display: block;
+  }
+
+  .tour-details .itinerary-content .single-item .inner-box .image-box{
+    margin-bottom: 30px;
+  }
+
+  .booking-form{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .error-section h1{
+    font-size: 200px;
+    line-height: 200px;
+  }
+
+  .package-section .lower-text{
+    display: block;
+  }
+}
+
+
+@media only screen and (max-width: 499px){
+  .mobile-menu{
+    width: 100%;
+  }
+
+  .header-top .top-inner p{
+    display: block;
+    text-align: center;
+  }
+
+  .header-top .right-column .info-list{
+    display: block;
+  }
+
+  .header-top .right-column .info-list li{
+    justify-content: center;
+  }
+
+  .menu-right-content .language-box{
+    display: none;
+  }
+
+  .menu-right-content .sidebar-toggler{
+    display: none;
+  }
+
+  .banner-section .banner-carousel .content-box .inner-box{
+    display: block;
+  }
+
+  .banner-section .banner-carousel .content-box .inner-box .price-box{
+    margin-top: 30px;
+  }
+
+  .banner-section .banner-carousel .content-box .inner-box .price-box .shape{
+    display: none;
+  }
+
+  .categories-block-one .lower-content{
+    margin-top: -60px;
+  }
+
+  .journeys-section .image-box{
+    padding: 0px;
+  }
+
+  .journeys-section .image-box .image-2{
+    position: relative;
+    margin: 30px 0px;
+  }
+
+  .journeys-section .image-box .image-3{
+    position: relative;
+    bottom: 0px;
+  }
+
+  .journeys-section .content-box .single-item .inner-box{
+    min-width: 100%;
+  }
+
+  .package-block-one .lower-content .lower-box{
+    display: block;
+  }
+
+  .package-block-one .lower-content .lower-box .link a{
+    margin-top: 10px;
+  }
+
+  .award-section .award-content{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .main-footer .widget-section{
+    padding-top: 70px;
+  }
+
+  .header-style-two .menu-right-content .text{
+    display: none;
+  }
+
+  .header-style-two .outer-box{
+    display: block;
+  }
+
+  .header-style-two .menu-area{
+    display: block;
+  }
+
+  .header-style-two .menu-right-content{
+    display: none;
+  }
+
+  .banner-style-two .left-column .left-content p br{
+    display: none;
+  }
+
+  .banner-style-two .left-column .left-content .btn-box{
+    display: block;
+  }
+
+  .banner-style-two .left-column .left-content .btn-box .theme-btn{
+    margin-bottom: 15px;
+  }
+
+  .banner-style-two .booking-form .form-group{
+    width: 100%;
+  }
+
+  .banner-style-two .booking-form input, .banner-style-two .booking-form .nice-select{
+    border-radius: 50px !important;
+    margin-bottom: 15px;
+  }
+
+  .booking-form .form-group .select-box{
+    min-height: 70px;
+  }
+
+  .banner-style-two .booking-form .form-group .icon{
+    bottom: 35px;
+  }
+
+  .about-section .image-box .image-shape{
+    display: none;
+  }
+
+  .about-section .image-box .image-1{
+    margin-bottom: 60px;
+  }
+
+  .travel-section .lower-text{
+    display: block;
+  }
+
+  .popular-section .inner-container{
+    display: block;
+    margin: 0px;
+  }
+
+  .popular-block-one.active{
+    width: 100%;
+  }
+
+  .popular-block-one{
+    margin: 0px;
+    min-height: 100%;
+    margin-bottom: 30px;
+  }
+
+  .travel-block-two .inner-box .content-box .price-box .price{
+    display: block;
+  }
+
+  .header-top-three{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .header-style-three .logo-box{
+    display: none;
+  }
+
+  .banner-style-three .content-box{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .banner-style-three .content-box .booking-form .form-group input, 
+  .banner-style-three .content-box .booking-form .form-group .nice-select{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  br{
+    display: none;
+  }
+
+  .package-style-two .content-box .lower-box{
+    margin-top: 100px;
+  }
+
+  .cs-countdown{
+    display: block;
+  }
+
+  .cs-countdown .count-col{
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 15px;
+  }
+
+  .cs-countdown .count-col:last-child{
+    margin-right: 0px;
+  }
+
+  .chooseus-style-two .single-item .icon-box{
+    position: relative;
+    top: 0px;
+    margin-bottom: 15px;
+  }
+
+  .chooseus-style-two .image-box .image{
+    margin-left: 0px;
+  }
+
+  .testimonial-block-three .image-box{
+    position: relative;
+    top: 0px;
+    right: 0px;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-block-three .icon-box{
+    display: block;
+  }
+
+  .subscribe-section .form-inner .form-group{
+    padding-right: 0px;
+  }
+
+  .subscribe-section .form-inner .form-group .theme-btn{
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .footer-style-three .footer-top h1{
+    font-size: 80px;
+    line-height: 90px;
+  }
+
+  .header-style-four .left-column,
+  .header-style-four .outer-box{
+    gap: 30px;
+  }
+
+  .banner-style-four .content-box h2{
+    font-size: 60px;
+    line-height: 70px;
+  }
+
+  .booking-style-two .booking-form .form-group{
+    display: block;
+  }
+
+  .booking-style-two .booking-form .form-group input, 
+  .booking-style-two .booking-form .form-group .nice-select{
+    padding-left: 0px;
+  }
+
+  .booking-style-two .booking-form{
+    padding-left: 29px;
+    padding-right: 29px;
+  }
+
+  .booking-style-two .booking-form .form-group label{
+    padding-right: 0px;
+    border-right: none;
+    padding-top: 10px;
+  }
+
+  .testimonial-block-two .testimonial-image .image-1,
+  .testimonial-block-two .testimonial-image .image-3{
+    transform: rotate(0deg);
+    top: 0px;
+    left: 0px;
+  }
+
+  .testimonial-block-two .testimonial-image .image-3{
+    right: 0px;
+  }
+
+  .testimonial-block-two .testimonial-image{
+    gap: 15px;
+  }
+
+  .footer-style-four .footer-top h2{
+    font-size: 36px;
+    line-height: 46px;
+  }
+
+  .footer-style-four .form-inner .social-box{
+    display: block;
+  }
+
+  .footer-style-four .form-inner .social-box .text{
+    margin-bottom: 10px;
+  }
+
+  .search-popup .popup-inner{
+    padding: 50px 30px;
+  }
+
+  .page-title .bread-crumb{
+    display: block;
+  }
+
+  .page-title .bread-crumb li{
+    display: inline-block;
+  }
+
+  .package-section .sort-box{
+    display: block;
+  }
+
+  .package-section .sort-box p{
+    margin-bottom: 10px;
+  }
+
+  .package-section .sort-box .select-box{
+    justify-content: space-between;
+  }
+
+  .pagination li a{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    min-width: 40px;
+  }
+
+  .travel-block-two .inner-box .content-box .price-box{
+    display: block;
+  }
+
+  .tour-details .title-box .other-text{
+    display: block;
+  }
+
+  .tour-details .title-box .other-text .duration-box::before{
+    display: none;
+  }
+
+  .tour-details .title-box .other-text .duration-box{
+    padding-right: 0px;
+    margin-bottom: 10px;
+  }
+
+  .tour-details .overview-content .list-item li{
+    display: block;
+  }
+
+  .tour-details .overview-content .list-item li span:first-child{
+    padding-bottom: 0px;
+  }
+
+  .tour-details .overview-content .list-item li span:last-child{
+    padding-top: 0px;
+  }
+
+  .tour-details .overview-content .list-item li .icon{
+    height: 100%;
+    line-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tour-details .itinerary-content .single-item{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .tour-details .includes-content .single-item{
+    display: block;
+  }
+
+  .tour-details .includes-content .single-item .list-text{
+    padding-left: 0px;
+    width: 100%;
+  }
+
+  .tour-details .includes-content .single-item .list-text::before{
+    display: none;
+  }
+
+  .tour-details .includes-content .single-item .title-text{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .comingsoon-section .left-content h2{
+    font-size: 60px;
+    line-height: 70px;
+  }
+
+  .comingsoon-section .left-content h3{
+    font-size: 40px;
+    line-height: 50px;
+  }
+
+  .comingsoon-section .right-content{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .error-section h1{
+    font-size: 140px;
+    line-height: 140px;
+  }
+
+  .post-widget article{
+    display: block;
+  }
+
+  .post-widget article .image-box{
+    margin-bottom: 15px;
+  }
+
+  .main-footer .footer-info .single-info-box{
+    display: block;
+  }
+
+  .main-footer .footer-info .single-info-box .icon-box{
+    margin-top: 10px;
+  }
+
+  .page-title .post-info{
+    display: block;
+  }
+
+  .page-title .post-info li{
+    display: inline-flex;
+    margin-right: 10px;
+  }
+
+  .page-title .post-info li:last-child{
+    margin-right: 0px;
+  }
+
+  .blog-details-content blockquote{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .blog-details-content .post-nav .single-btn h4{
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .blog-details-content .comment-box .single-comment-box{
+    display: block;
+  }
+
+  .blog-details-content .comment-box .single-comment-box .comment-thumb{
+    margin-bottom: 15px;
+  }
+
+  .contact-section .info-box .single-item{
+    display: block;
+  }
+
+  .contact-section .info-box .single-item .icon-box{
+    margin-top: 10px;
+  }
+
+  .contact-section .inner-container{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 0px;
+  }
+
+  .contact-section .inner-container .shape{
+    display: none;
+  }
+}

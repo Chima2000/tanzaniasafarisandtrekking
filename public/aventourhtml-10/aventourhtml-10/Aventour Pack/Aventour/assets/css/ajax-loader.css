@@ -1,0 +1,99 @@
+/* Contact / booking / enquiry form loading overlay */
+
+.site-ajax-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 41, 59, 0.72);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  backdrop-filter: blur(2px);
+}
+
+.site-ajax-loader.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.site-ajax-loader__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 28px 32px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.28);
+  min-width: 160px;
+}
+
+.site-ajax-loader__spinner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 4px solid #ffedd5;
+  border-top-color: var(--theme-color, #ea580c);
+  animation: site-ajax-spin 0.75s linear infinite;
+}
+
+.site-ajax-loader__text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--title-color, #1e293b);
+}
+
+html.is-site-ajax-loading,
+html.is-site-ajax-loading body {
+  cursor: progress;
+}
+
+.theme-btn.is-loading,
+.btn.is-loading,
+button.is-loading,
+input[type="submit"].is-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.82;
+}
+
+.theme-btn.is-loading > *,
+.btn.is-loading > *:not(.site-ajax-btn-spinner) {
+  opacity: 0.15;
+}
+
+.theme-btn.is-loading .site-ajax-btn-spinner,
+.btn.is-loading .site-ajax-btn-spinner,
+button.is-loading .site-ajax-btn-spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: site-ajax-spin 0.7s linear infinite;
+}
+
+.btn-outline-primary.is-loading .site-ajax-btn-spinner,
+.btn-light.is-loading .site-ajax-btn-spinner,
+.btn-outline-danger.is-loading .site-ajax-btn-spinner {
+  border-color: rgba(234, 88, 12, 0.25);
+  border-top-color: var(--theme-color, #ea580c);
+}
+
+@keyframes site-ajax-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

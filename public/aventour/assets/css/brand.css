@@ -1,0 +1,982 @@
+:root {
+  /* Primary Brand */
+  --color-primary: #EA580C;
+  --color-primary-hover: #C2410C;
+  --color-primary-tint-40: #FED7AA;
+  --color-primary-tint-20: #FFEDD5;
+  --color-primary-tint-10: #FFF7ED;
+
+  /* Secondary & Neutrals */
+  --color-secondary: #1E293B;
+  --color-bg-canvas: #FFFFFF;
+  --color-bg-mist: #F8FAFC;
+  --color-text-main: #1E293B;
+
+  /* Aventour template bridge */
+  --theme-color: var(--color-primary);
+  --secondary-color: var(--color-secondary);
+  --title-color: var(--color-text-main);
+  --text-color: var(--color-text-main);
+}
+
+body {
+  color: var(--color-text-main);
+  background-color: var(--color-bg-canvas);
+}
+
+.bg-color-1,
+.bg-color-2 {
+  background-color: var(--color-bg-mist) !important;
+}
+
+.theme-btn:hover,
+.theme-btn:focus-visible {
+  background-color: var(--color-primary-hover) !important;
+}
+
+.theme-btn.secondary-bg {
+  background-color: var(--color-secondary);
+}
+
+.theme-btn.secondary-bg:hover,
+.theme-btn.secondary-bg:focus-visible {
+  background-color: var(--color-primary) !important;
+}
+
+.header-top,
+.main-footer,
+.main-footer.bg-color-1,
+.footer-widget .widget-title h3,
+.page-title .bg-layer::before {
+  --footer-ink: var(--color-secondary);
+}
+
+.header-top .bg-layer,
+.mobile-menu .menu-box,
+.sidebar-popup .popup-inner {
+  background-color: var(--color-secondary);
+}
+
+.scroll-top {
+  background-color: var(--color-primary) !important;
+}
+
+.scroll-top:hover {
+  background-color: var(--color-primary-hover) !important;
+}
+
+.dots-style-one .swiper-pagination-bullet-active,
+.three-item-pagination .swiper-pagination-bullet-active,
+.six-item-pagination .swiper-pagination-bullet-active {
+  background-color: var(--color-primary) !important;
+}
+
+a:hover,
+.main-menu .navigation > li:hover > a,
+.main-menu .navigation > li.current > a,
+.sec-title .sub-title,
+.sec-title .sub-title span,
+.special-text,
+.flaticon-star,
+.package-block-one .title-box .location i,
+.destinations-block-one .location i,
+.link-box a,
+.bread-crumb a:hover {
+  color: var(--color-primary);
+}
+
+.package-block-one:hover,
+.categories-block-one:hover,
+.news-block-one:hover .lower-content .category-box {
+  border-color: var(--color-primary);
+}
+
+.package-block-one .lower-content,
+.categories-block-one .lower-content,
+.package-block-one .image-box,
+.booking-section .inner-box,
+.faq-sidebar .inner-box,
+.chooseus-section,
+.testimonial-section.bg-color-1,
+.journeys-section.bg-color-1 {
+  background-color: var(--color-bg-mist);
+}
+
+.package-block-one .lower-content,
+.categories-block-one .lower-content {
+  background-color: var(--color-bg-mist);
+}
+
+.package-block-one {
+  box-shadow: 0px 4px 0px 0px var(--color-primary-tint-20);
+}
+
+.package-block-one:hover {
+  border-color: var(--color-primary);
+}
+
+.brand-text-logo {
+  color: var(--color-secondary);
+}
+
+.header-lower .brand-text-logo,
+.sticky-header .brand-text-logo {
+  color: var(--color-secondary);
+}
+
+.header-top .brand-text-logo,
+.main-footer .brand-text-logo,
+.mobile-menu .brand-text-logo,
+.sidebar-popup .brand-text-logo {
+  color: #fff;
+}
+
+.main-footer .brand-text-logo span,
+.mobile-menu .brand-text-logo span,
+.sidebar-popup .brand-text-logo span {
+  color: var(--color-primary-tint-40);
+}
+
+/* Brand logo: compact header height matching nav controls */
+.main-header .header-lower .outer-box,
+.sticky-header .outer-box {
+  align-items: center;
+  gap: 28px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.main-header .logo,
+.sticky-header .logo {
+  display: block !important;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 220px;
+  margin: 0;
+}
+
+.main-header .logo .brand-image-logo,
+.sticky-header .logo .brand-image-logo {
+  display: block;
+  width: auto;
+}
+
+.main-header .logo .brand-image-logo img,
+.sticky-header .logo .brand-image-logo img {
+  display: block;
+  width: auto;
+  height: 64px;
+  max-width: 220px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.mobile-menu .nav-logo .brand-image-logo img,
+.sidebar-popup .logo .brand-image-logo img {
+  width: auto;
+  max-width: 200px;
+  height: 56px;
+}
+
+.main-footer .footer-logo .brand-image-logo img {
+  width: auto;
+  max-width: 220px;
+  height: 72px;
+}
+
+@media (max-width: 1200px) {
+  /* Theme hides sticky-header below 1200px; keep it for mobile scroll */
+  .sticky-header {
+    display: block !important;
+  }
+
+  .sticky-header .main-menu {
+    display: none !important;
+  }
+
+  .sticky-header .mobile-nav-toggler {
+    display: block !important;
+  }
+
+  .sticky-header .outer-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .sticky-header .menu-area {
+    margin-left: auto;
+    float: none;
+  }
+
+  .main-header .outer-box .logo,
+  .sticky-header .outer-box .logo {
+    display: block !important;
+    flex: 0 1 auto;
+    max-width: 180px;
+    margin-right: auto;
+  }
+
+  .main-header .outer-box .logo .brand-image-logo img,
+  .sticky-header .outer-box .logo .brand-image-logo img {
+    height: 52px;
+    max-width: 180px;
+  }
+}
+
+.header-top .header-top-icon-link,
+.header-top .right-column .info-list li .header-top-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+.header-top .header-top-icon-link:hover,
+.header-top .right-column .info-list li .header-top-icon-link:hover {
+  color: var(--color-primary);
+}
+
+.header-top .header-top-icon-link img,
+.header-top .right-column .info-list li .header-top-icon-link img {
+  display: block;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .main-header .outer-box .logo {
+    max-width: 150px;
+  }
+
+  .main-header .outer-box .logo .brand-image-logo img {
+    height: 44px;
+    max-width: 150px;
+  }
+
+  /* Compact icon-only top utility bar on phones */
+  .header-top .top-inner {
+    display: flex !important;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px 14px;
+    padding: 6px 12px !important;
+    min-height: 0;
+  }
+
+  .header-top .top-inner p,
+  .header-top .right-column,
+  .header-top .right-column .info-list {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .header-top .right-column {
+    gap: 14px;
+  }
+
+  .header-top .right-column .info-list {
+    padding-right: 0;
+  }
+
+  .header-top .right-column .info-list::before {
+    display: none;
+  }
+
+  .header-top .right-column .info-list li {
+    margin: 0;
+    justify-content: center;
+  }
+
+  .header-top .header-top-text {
+    display: none !important;
+  }
+
+  .header-top .header-top-icon-link {
+    gap: 0;
+    line-height: 0;
+  }
+
+  .header-top .header-top-icon-link img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+
+  .header-top .right-column .social-links {
+    margin-top: 0 !important;
+    gap: 12px;
+  }
+
+  .header-top .right-column .social-links li a {
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  /* Hide Book Now on phones (main + sticky header) */
+  .main-header .menu-right-content .btn-box,
+  .sticky-header .menu-right-content .btn-box,
+  .sticky-header .menu-right-content {
+    display: none !important;
+  }
+
+  .main-header .header-lower .outer-box,
+  .sticky-header .outer-box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 12px;
+  }
+
+  .sticky-header .outer-box .logo {
+    max-width: 150px;
+  }
+
+  .sticky-header .outer-box .logo .brand-image-logo img {
+    height: 44px;
+    max-width: 150px;
+  }
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Home hero: fit fully in first viewport under the header */
+.banner-section {
+  --hero-header-offset: 150px;
+  height: calc(100svh - var(--hero-header-offset));
+  min-height: 540px;
+  max-height: 780px;
+  overflow: hidden;
+}
+
+.banner-section .banner-carousel,
+.banner-section .banner-carousel .swiper-wrapper,
+.banner-section .banner-carousel .swiper-slide {
+  height: 100%;
+}
+
+.banner-section .banner-carousel .slide-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  min-height: 100%;
+  padding: 36px 0 44px;
+}
+
+.banner-section .banner-carousel .slide-item .auto-container {
+  /* Full grid width so the hero block stays left inside the page container,
+     instead of shrink-wrapping and centering in the viewport */
+  width: 100%;
+  max-width: 1200px;
+}
+
+.banner-section .banner-carousel .content-box {
+  max-width: 600px;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+}
+
+.banner-section .banner-carousel .content-box .sub-title {
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  justify-content: flex-start;
+}
+
+.banner-section .banner-carousel .content-box h2 {
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.12;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.banner-section .banner-carousel .content-box .inner-box {
+  gap: 24px;
+  max-width: 540px;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.banner-section .banner-carousel .content-box .inner-box .text-box {
+  text-align: left;
+}
+
+.banner-section .banner-carousel .content-box .inner-box p {
+  margin-bottom: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.banner-section .banner-carousel .content-box .inner-box .price-box {
+  min-width: 148px;
+  max-width: 148px;
+  padding: 14px 20px;
+}
+
+.banner-section .banner-carousel .content-box .inner-box .price-box h5 {
+  font-size: 15px;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+
+.banner-section .banner-carousel .content-box .inner-box .price-box .price {
+  font-size: 20px;
+  line-height: 26px;
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+.banner-section .banner-carousel .banner-navigation button {
+  width: 56px;
+  height: 56px;
+  line-height: 60px;
+  font-size: 24px;
+}
+
+@media (max-width: 1199px) {
+  .banner-section {
+    --hero-header-offset: 130px;
+  }
+}
+
+@media (max-width: 991px) {
+  .banner-section {
+    --hero-header-offset: 110px;
+    min-height: 500px;
+  }
+
+  .banner-section .banner-carousel .slide-item {
+    padding: 28px 0 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner-section {
+    height: auto;
+    max-height: none;
+    min-height: calc(100svh - 78px);
+  }
+
+  .banner-section .banner-carousel .slide-item {
+    height: auto;
+    min-height: calc(100svh - 78px);
+    padding: 56px 0 48px;
+  }
+}
+
+/* Recolor green/lime raster icons to brand orange */
+img[src*="/aventour/assets/images/icons/icon-"]:not([src*="icon-18"]):not([src*="icon-19"]),
+img[src*="/aventour/assets/images/icons/icon-1.png"],
+img[src*="/aventour/assets/images/icons/icon-2.png"],
+img[src*="/aventour/assets/images/icons/icon-3.png"] {
+  filter: hue-rotate(-62deg) saturate(1.45) brightness(0.98);
+}
+
+.sec-title .sub-title i,
+.flaticon-parachuting,
+.flaticon-location,
+.flaticon-calendar-1,
+.flaticon-star,
+.flaticon-check,
+.flaticon-plus,
+.flaticon-route,
+.flaticon-zoom-in,
+.chooseus-block-one .icon-box,
+.chooseus-block-two .icon-box,
+.feature-block-one .icon-box,
+.news-block-one .lower-content .category-box i,
+.tour-details .title-box .title-text .location i,
+.tour-details .title-box .other-text .duration-box .icon-box,
+.tour-details .title-box .other-text .rating i,
+.tour-details .includes-content .list-item i.flaticon-check,
+.package-block-one .lower-content .price-rating .rating i,
+.accordion-box .acc-btn .icon-box,
+.accordion-box .acc-btn .icon-box i {
+  color: var(--color-primary) !important;
+}
+
+.tour-details .tab-btns li.active-btn,
+.tour-details .tab-btns li.active-btn a,
+.tour-details .tab-btns li.active-btn span,
+.tour-details .tab-btns li.active-btn i {
+  color: var(--color-primary);
+}
+
+.tour-details .tab-btns li.active-btn {
+  background-color: var(--color-primary-tint-10);
+  border-color: var(--color-primary-tint-40);
+}
+
+.tour-details .tab-btns li {
+  border-color: var(--color-primary-tint-20);
+  background-color: var(--color-bg-canvas);
+}
+
+.tour-details .tab-btns li a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tour-details .tour-scroll-nav-bar {
+  position: sticky;
+  top: 90px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-canvas);
+  padding: 14px 0 10px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 18px -16px rgba(30, 41, 59, 0.45);
+}
+
+.tour-details .tour-scroll-nav-bar > .tour-scroll-nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.tour-details .tour-scroll-nav-arrow {
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--color-primary-tint-20);
+  border-radius: 50%;
+  background: var(--color-bg-canvas);
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: background-color 200ms linear, color 200ms linear, opacity 200ms linear;
+}
+
+.tour-details .tour-scroll-nav-arrow i {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.tour-details .tour-scroll-nav-prev i {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.tour-details .tour-scroll-nav-arrow:hover,
+.tour-details .tour-scroll-nav-arrow:focus-visible {
+  background: var(--color-primary);
+  color: #fff;
+  outline: none;
+}
+
+.tour-details .tour-scroll-nav-arrow.is-disabled,
+.tour-details .tour-scroll-nav-arrow:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.tour-details .tour-scroll-spy .tab,
+.tour-details .tour-scroll-spy .tabs-content .tab {
+  display: block !important;
+  transform: none !important;
+  opacity: 1 !important;
+  margin-bottom: 70px;
+  scroll-margin-top: 140px;
+}
+
+.tour-details .tour-scroll-spy .tab:last-child {
+  margin-bottom: 0;
+}
+
+.tour-details .includes-content .single-item + .single-item {
+  margin-top: 40px;
+}
+
+/* Sticky page sidebars: unclip ancestors + stretch columns, then pin + self-scroll */
+body.has-sticky-sidebar .boxed_wrapper,
+body.has-sticky-sidebar .package-section,
+body.has-sticky-sidebar .package-section .auto-container,
+body.has-sticky-sidebar .faq-page-section,
+body.has-sticky-sidebar .faq-page-section .auto-container,
+body.has-tour-sticky .boxed_wrapper,
+body.has-tour-sticky .tour-details,
+body.has-tour-sticky .tour-details .auto-container,
+body.has-tour-sticky .tour-details .tabs-box {
+  overflow: visible !important;
+}
+
+.package-section .row.clearfix,
+.faq-page-section .row.clearfix,
+.tour-details .row.clearfix {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.package-section .content-side,
+.package-section .sidebar-side,
+.faq-page-section .content-side,
+.faq-page-section .sidebar-side,
+.tour-details .content-side,
+.tour-details .sidebar-side {
+  float: none;
+}
+
+.package-section .sidebar-side,
+.faq-page-section .sidebar-side,
+.tour-details .sidebar-side {
+  align-self: stretch;
+}
+
+.package-sidebar,
+.faq-page-section .sidebar-content,
+.tour-details .tour-sidebar {
+  position: sticky;
+  top: 120px;
+  z-index: 20;
+  max-height: calc(100vh - 140px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tour-details .tour-gallery-content h2 {
+  margin-bottom: 10px;
+}
+
+.tour-details .tour-gallery-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.tour-details .tour-gallery-slider .swiper-slide .image-box {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.tour-details .tour-gallery-slider .swiper-slide .image-box img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 770 / 480;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 20px;
+}
+
+.tour-details .tour-gallery-slider .single-column-pagination {
+  margin-top: 18px;
+  text-align: center;
+}
+
+@media (max-width: 991px) {
+  .tour-details .tour-scroll-nav-bar {
+    top: 0;
+  }
+
+  .tour-details .tour-scroll-nav-arrow {
+    display: inline-flex;
+  }
+
+  .tour-details .tour-scroll-nav-bar > .tour-scroll-nav,
+  .tour-details .tour-scroll-spy .tour-scroll-nav.tab-btns {
+    display: flex !important;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 0;
+  }
+
+  .tour-details .tour-scroll-nav-bar > .tour-scroll-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tour-details .tour-scroll-nav-bar > .tour-scroll-nav li {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    margin-bottom: 0;
+  }
+
+  .package-sidebar,
+  .faq-page-section .sidebar-content,
+  .tour-details .tour-sidebar {
+    position: relative;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+.destination-fact-card {
+  text-align: center;
+  padding: 28px 20px;
+  background: var(--color-bg-mist);
+  border-radius: 16px;
+  height: 100%;
+}
+
+.destination-fact-card h3 {
+  margin-bottom: 8px;
+  color: var(--color-primary);
+}
+
+.destination-story-chapters .content-box p {
+  margin-bottom: 16px;
+}
+
+.news-section .news-block {
+  display: flex;
+}
+
+.blog-index-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.blog-index-card .lower-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.blog-index-card .lower-content h3 {
+  flex-grow: 1;
+  min-height: 96px;
+}
+
+.blog-index-card .lower-content h3 a {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.blog-index-card .lower-content .lower-box {
+  margin-top: auto;
+}
+
+.destination-story-page .sec-title h2 {
+  max-width: 18ch;
+}
+
+/* --------------------------------------------------------------------------
+   Template photo frames
+   Keep uploaded photos cropped to original Aventour aspect ratios so every
+   section/page keeps the same collage and card layout as the HTML template.
+   -------------------------------------------------------------------------- */
+
+.package-block-one .image-box,
+.package-block-one .image-box .image,
+.categories-block-one .image-box,
+.destinations-block-one .image-box .image,
+.news-block-one .image-box .image,
+.journeys-section .image-box .image,
+.about-section .image-box .image,
+.about-section .content-box .inner-box .image,
+.tour-details .overview-content .image-box,
+.popular-block-one .image-box {
+  overflow: hidden;
+}
+
+.about-section .image-box .image-1 img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 340 / 298;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.about-section .image-box .image-2 {
+  width: min(370px, 100%);
+}
+
+.about-section .image-box .image-2 img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 370 / 266;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.about-section .content-box .inner-box .image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 340 / 218;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.about-section .image-box .video-box {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+.package-block-one .image-box .image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 350 / 290;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.categories-block-one .image-box img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 270 / 298;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.destinations-block-one .image-box .image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 270 / 270;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.news-block-one .image-box .image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 370 / 300;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.journeys-section .image-box .image-1 img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 360 / 380;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.journeys-section .image-box .image-2 img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 278 / 364;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.journeys-section .image-box .image-3 img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 338 / 244;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.testimonial-block-one .clients-image img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.testimonial-section > .bg-image img {
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 420 / 480;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+}
+
+.footer-widget .post .image-box {
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.footer-widget .post .image-box img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.tour-details .overview-content .image-box img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 770 / 450;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 20px;
+}
+
+.popular-block-one .image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.banner-section .bg-layer,
+.chooseus-section .bg-image .bg-image-1,
+.award-section .bg-layer,
+.categories-section .bg-layer,
+.journeys-section .single-item .inner-box .bg-layer,
+.page-title .bg-layer {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (max-width: 991px) {
+  .about-section .image-box .image-2 {
+    width: min(370px, 85%);
+  }
+}

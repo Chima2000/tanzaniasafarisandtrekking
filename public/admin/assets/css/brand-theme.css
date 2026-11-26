@@ -1,0 +1,260 @@
+:root,
+[data-bs-theme=light] {
+    --bs-primary: #EA580C;
+    --bs-primary-rgb: 234, 88, 12;
+    --bs-primary-text-emphasis: #1E293B;
+    --bs-primary-bg-subtle: rgba(234, 88, 12, 0.12);
+    --bs-primary-border-subtle: #FED7AA;
+    --bs-dark: #1E293B;
+    --bs-dark-rgb: 30, 41, 59;
+    --bs-link-color: #EA580C;
+    --bs-link-color-rgb: 234, 88, 12;
+    --bs-link-hover-color: #C2410C;
+    --bs-link-hover-color-rgb: 194, 65, 12;
+    --bs-focus-ring-color: rgba(234, 88, 12, 0.25);
+    --brand-primary: #EA580C;
+    --brand-primary-hover: #C2410C;
+    --brand-secondary: #1E293B;
+    --brand-mist: #F8FAFC;
+    --brand-tint: #FFF7ED;
+}
+
+.btn-primary {
+    --bs-btn-bg: #EA580C;
+    --bs-btn-border-color: #EA580C;
+    --bs-btn-hover-bg: #C2410C;
+    --bs-btn-hover-border-color: #9A3412;
+    --bs-btn-active-bg: #9A3412;
+    --bs-btn-active-border-color: #7C2D12;
+    --bs-btn-disabled-bg: #EA580C;
+    --bs-btn-disabled-border-color: #EA580C;
+    --bs-btn-focus-shadow-rgb: 234, 88, 12;
+    box-shadow: 0 1px 2px 0 rgba(234, 88, 12, 0.35);
+}
+
+.btn-primary:hover {
+    box-shadow: none;
+}
+
+.form-switch-success .form-check-input:checked,
+.form-check-input:checked {
+    background-color: #EA580C;
+    border-color: #EA580C;
+}
+
+.auth-header-box,
+.auth-aside {
+    background-color: #1E293B !important;
+}
+
+.auth-aside {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.auth-aside-overlay {
+    background: linear-gradient(90deg, rgba(30, 41, 59, 0.88) 0%, rgba(30, 41, 59, 0.55) 40%, rgba(30, 41, 59, 0.12) 72%, rgba(30, 41, 59, 0) 100%);
+}
+
+.auth-login-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.auth-login-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-color: #1E293B;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.auth-login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.auth-login-content {
+    z-index: 2;
+}
+
+.auth-brand-logo img {
+    max-height: 110px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.text-brand {
+    color: #EA580C !important;
+}
+
+.bg-brand-mist {
+    background-color: #F8FAFC !important;
+}
+
+.startbar .brand {
+    background: #1E293B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--bs-topbar-height);
+    height: var(--bs-topbar-height);
+    padding: 1rem 1.15rem;
+    overflow: hidden;
+}
+
+.startbar .brand .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+/* Template shows logo-sm + logo-lg side by side; our mark is a full logo, so only show one. */
+.startbar .brand .logo > span:first-child {
+    display: none;
+}
+
+.startbar .brand .logo > span:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.startbar .brand .logo .logo-sm,
+.startbar .brand .logo .logo-lg {
+    height: 90% !important;
+    width: 90% !important;
+    max-height: none;
+    max-width: none;
+    object-fit: contain;
+    object-position: center;
+    margin-left: 0 !important;
+}
+
+.startbar .brand .logo .logo-light,
+.startbar .brand .logo .logo-dark {
+    display: none !important;
+}
+
+.startbar .brand .logo .logo-light {
+    display: block !important;
+}
+
+body[data-sidebar-size=collapsed] .startbar .brand {
+    padding: 0.5rem;
+}
+
+body[data-sidebar-size=collapsed] .startbar .brand .logo > span:first-child {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+body[data-sidebar-size=collapsed] .startbar .brand .logo > span:last-child {
+    display: none !important;
+}
+
+body[data-sidebar-size=collapsed] .startbar .brand .logo .logo-sm {
+    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+    max-height: none;
+    max-width: none;
+    object-fit: contain;
+    object-position: center;
+}
+
+.startbar .startbar-menu .startbar-collapse {
+    padding-top: 1rem;
+}
+
+.startbar .startbar-menu .navbar-nav > .menu-label:first-child {
+    padding-top: 1rem !important;
+    margin-top: 0 !important;
+}
+
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link:hover,
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link.active {
+    color: #EA580C;
+}
+
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link:hover::before,
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link.active::before {
+    border-color: #EA580C !important;
+    background-color: #EA580C !important;
+}
+
+.page-wrapper .page-content {
+    background: linear-gradient(180deg, #FFF7ED 0%, #F8FAFC 180px, #F8FAFC 100%);
+    padding: 1.75rem 1.75rem 4.25rem !important;
+}
+
+.page-wrapper .page-content > .container-xxl {
+    padding-top: 0.35rem;
+    max-width: 100%;
+}
+
+.page-wrapper .page-content .row {
+    --bs-gutter-x: 1.75rem;
+    --bs-gutter-y: 1.75rem;
+}
+
+.page-wrapper .page-content .card {
+    border-color: rgba(30, 41, 59, 0.06);
+}
+
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(234, 88, 12, 0.12);
+    color: #EA580C;
+}
+
+.admin-thumb {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.badge-status-new {
+    background: rgba(234, 88, 12, 0.12);
+    color: #C2410C;
+}
+
+.badge-status-reviewed,
+.badge-status-contacted {
+    background: rgba(30, 41, 59, 0.08);
+    color: #1E293B;
+}
+
+.badge-status-closed {
+    background: rgba(100, 116, 139, 0.16);
+    color: #475569;
+}
+
+.topbar .welcome-text h3 {
+    color: #1E293B;
+}
+
+.input-group-text[data-password-toggle] {
+    cursor: pointer;
+}

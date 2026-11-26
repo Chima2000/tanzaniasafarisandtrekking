@@ -1,0 +1,185 @@
+$flaticon_aventour-font: "flaticon_aventour";
+
+@font-face {
+    font-family: $flaticon_aventour-font;
+    src: url("./flaticon_aventour.woff2?ae665e1acd4efe8870a9d7ce43fa1c0e") format("woff2"),
+url("./flaticon_aventour.woff?ae665e1acd4efe8870a9d7ce43fa1c0e") format("woff"),
+url("./flaticon_aventour.eot?ae665e1acd4efe8870a9d7ce43fa1c0e#iefix") format("embedded-opentype"),
+url("./flaticon_aventour.ttf?ae665e1acd4efe8870a9d7ce43fa1c0e") format("truetype"),
+url("./flaticon_aventour.svg?ae665e1acd4efe8870a9d7ce43fa1c0e#flaticon_aventour") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon_aventour !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$flaticon_aventour-map: (
+    "youtube": "\f101",
+    "twitter": "\f102",
+    "instagram-logo": "\f103",
+    "arrow": "\f104",
+    "down-arrow": "\f105",
+    "globe": "\f106",
+    "list": "\f107",
+    "arrow-1": "\f108",
+    "parachuting": "\f109",
+    "route": "\f10a",
+    "rating": "\f10b",
+    "calendar": "\f10c",
+    "location": "\f10d",
+    "zoom-in": "\f10e",
+    "star": "\f10f",
+    "delete": "\f110",
+    "plus": "\f111",
+    "map": "\f112",
+    "facebook-app-symbol": "\f113",
+    "whatsapp": "\f114",
+    "arrow-angle-pointing-to-right": "\f115",
+    "zoom": "\f116",
+    "traveller": "\f117",
+    "traveler": "\f118",
+    "language": "\f119",
+    "rating-1": "\f11a",
+    "phone": "\f11b",
+    "person": "\f11c",
+    "online-shopping": "\f11d",
+    "checklist": "\f11e",
+    "up-arrow": "\f11f",
+    "teamwork": "\f120",
+    "takeoff": "\f121",
+    "calendar-1": "\f122",
+    "hotel": "\f123",
+    "bus": "\f124",
+    "check": "\f125",
+    "failed": "\f126",
+    "border": "\f127",
+    "headphones": "\f128",
+);
+
+.flaticon-youtube:before {
+    content: map-get($flaticon_aventour-map, "youtube");
+}
+.flaticon-twitter:before {
+    content: map-get($flaticon_aventour-map, "twitter");
+}
+.flaticon-instagram-logo:before {
+    content: map-get($flaticon_aventour-map, "instagram-logo");
+}
+.flaticon-arrow:before {
+    content: map-get($flaticon_aventour-map, "arrow");
+}
+.flaticon-down-arrow:before {
+    content: map-get($flaticon_aventour-map, "down-arrow");
+}
+.flaticon-globe:before {
+    content: map-get($flaticon_aventour-map, "globe");
+}
+.flaticon-list:before {
+    content: map-get($flaticon_aventour-map, "list");
+}
+.flaticon-arrow-1:before {
+    content: map-get($flaticon_aventour-map, "arrow-1");
+}
+.flaticon-parachuting:before {
+    content: map-get($flaticon_aventour-map, "parachuting");
+}
+.flaticon-route:before {
+    content: map-get($flaticon_aventour-map, "route");
+}
+.flaticon-rating:before {
+    content: map-get($flaticon_aventour-map, "rating");
+}
+.flaticon-calendar:before {
+    content: map-get($flaticon_aventour-map, "calendar");
+}
+.flaticon-location:before {
+    content: map-get($flaticon_aventour-map, "location");
+}
+.flaticon-zoom-in:before {
+    content: map-get($flaticon_aventour-map, "zoom-in");
+}
+.flaticon-star:before {
+    content: map-get($flaticon_aventour-map, "star");
+}
+.flaticon-delete:before {
+    content: map-get($flaticon_aventour-map, "delete");
+}
+.flaticon-plus:before {
+    content: map-get($flaticon_aventour-map, "plus");
+}
+.flaticon-map:before {
+    content: map-get($flaticon_aventour-map, "map");
+}
+.flaticon-facebook-app-symbol:before {
+    content: map-get($flaticon_aventour-map, "facebook-app-symbol");
+}
+.flaticon-whatsapp:before {
+    content: map-get($flaticon_aventour-map, "whatsapp");
+}
+.flaticon-arrow-angle-pointing-to-right:before {
+    content: map-get($flaticon_aventour-map, "arrow-angle-pointing-to-right");
+}
+.flaticon-zoom:before {
+    content: map-get($flaticon_aventour-map, "zoom");
+}
+.flaticon-traveller:before {
+    content: map-get($flaticon_aventour-map, "traveller");
+}
+.flaticon-traveler:before {
+    content: map-get($flaticon_aventour-map, "traveler");
+}
+.flaticon-language:before {
+    content: map-get($flaticon_aventour-map, "language");
+}
+.flaticon-rating-1:before {
+    content: map-get($flaticon_aventour-map, "rating-1");
+}
+.flaticon-phone:before {
+    content: map-get($flaticon_aventour-map, "phone");
+}
+.flaticon-person:before {
+    content: map-get($flaticon_aventour-map, "person");
+}
+.flaticon-online-shopping:before {
+    content: map-get($flaticon_aventour-map, "online-shopping");
+}
+.flaticon-checklist:before {
+    content: map-get($flaticon_aventour-map, "checklist");
+}
+.flaticon-up-arrow:before {
+    content: map-get($flaticon_aventour-map, "up-arrow");
+}
+.flaticon-teamwork:before {
+    content: map-get($flaticon_aventour-map, "teamwork");
+}
+.flaticon-takeoff:before {
+    content: map-get($flaticon_aventour-map, "takeoff");
+}
+.flaticon-calendar-1:before {
+    content: map-get($flaticon_aventour-map, "calendar-1");
+}
+.flaticon-hotel:before {
+    content: map-get($flaticon_aventour-map, "hotel");
+}
+.flaticon-bus:before {
+    content: map-get($flaticon_aventour-map, "bus");
+}
+.flaticon-check:before {
+    content: map-get($flaticon_aventour-map, "check");
+}
+.flaticon-failed:before {
+    content: map-get($flaticon_aventour-map, "failed");
+}
+.flaticon-border:before {
+    content: map-get($flaticon_aventour-map, "border");
+}
+.flaticon-headphones:before {
+    content: map-get($flaticon_aventour-map, "headphones");
+}

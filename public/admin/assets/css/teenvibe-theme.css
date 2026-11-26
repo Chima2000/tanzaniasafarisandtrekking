@@ -1,0 +1,203 @@
+:root,
+[data-bs-theme=light] {
+    --bs-primary: #c5a04a;
+    --bs-primary-rgb: 197, 160, 74;
+    --bs-primary-text-emphasis: #3a3a3a;
+    --bs-primary-bg-subtle: rgba(197, 160, 74, 0.12);
+    --bs-primary-border-subtle: #e6d6a8;
+    --bs-dark: #3a3a3a;
+    --bs-dark-rgb: 58, 58, 58;
+    --bs-link-color: #c5a04a;
+    --bs-link-color-rgb: 197, 160, 74;
+    --bs-link-hover-color: #8a6e28;
+    --bs-link-hover-color-rgb: 138, 110, 40;
+    --bs-focus-ring-color: rgba(197, 160, 74, 0.25);
+}
+
+.btn-primary {
+    --bs-btn-bg: #c5a04a;
+    --bs-btn-border-color: #c5a04a;
+    --bs-btn-hover-bg: #b08f3d;
+    --bs-btn-hover-border-color: #a38338;
+    --bs-btn-active-bg: #a38338;
+    --bs-btn-active-border-color: #967533;
+    --bs-btn-disabled-bg: #c5a04a;
+    --bs-btn-disabled-border-color: #c5a04a;
+    --bs-btn-focus-shadow-rgb: 197, 160, 74;
+    box-shadow: 0 1px 2px 0 rgba(197, 160, 74, 0.35);
+}
+
+.btn-primary:hover {
+    box-shadow: none;
+}
+
+.form-switch-success .form-check-input:checked {
+    background-color: #c5a04a;
+    border-color: #c5a04a;
+}
+
+.auth-header-box {
+    background-color: #3a3a3a !important;
+}
+
+.auth-aside {
+    background-color: #3a3a3a;
+    background-repeat: no-repeat;
+    background-position: 70% center;
+    background-size: cover;
+}
+
+.auth-aside-overlay {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.48) 38%, rgba(0, 0, 0, 0.12) 68%, rgba(0, 0, 0, 0) 100%);
+}
+
+.auth-kicker {
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+}
+
+.auth-aside-title {
+    font-size: 4.15rem;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+}
+
+.auth-aside-copy {
+    max-width: 28rem;
+    font-size: 1.05rem;
+}
+
+.auth-form-panel {
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.auth-form-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(255, 255, 255, 0.22);
+    pointer-events: none;
+}
+
+.auth-form-content {
+    z-index: 2;
+}
+
+.auth-deco-icon {
+    position: absolute;
+    z-index: 1;
+    opacity: 0.18;
+    pointer-events: none;
+    user-select: none;
+    filter: brightness(0);
+}
+
+.auth-deco-binocular {
+    top: 6%;
+    left: 4%;
+    width: 108px;
+    transform: rotate(-18deg);
+}
+
+.auth-deco-footprints {
+    top: 4%;
+    left: 50%;
+    width: 124px;
+    transform: translateX(-50%) rotate(14deg);
+}
+
+.auth-deco-mountain {
+    top: 5%;
+    right: 4%;
+    width: 136px;
+    transform: rotate(10deg);
+}
+
+.auth-deco-lock {
+    top: 45%;
+    left: 3%;
+    width: 92px;
+    transform: rotate(-14deg);
+}
+
+.auth-deco-lionpaw {
+    top: 43%;
+    right: 4%;
+    width: 112px;
+    transform: rotate(16deg);
+}
+
+.auth-deco-tent {
+    bottom: 5%;
+    left: 50%;
+    width: 148px;
+    transform: translateX(-50%) rotate(-8deg);
+}
+
+@media (max-width: 1399.98px) {
+    .auth-aside-title {
+        font-size: 3.25rem;
+    }
+}
+
+.auth-flip-scene {
+    perspective: 1400px;
+}
+
+.auth-flip-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.auth-flip-card.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.auth-flip-face {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.auth-flip-front {
+    position: relative;
+}
+
+.auth-flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    pointer-events: none;
+}
+
+.auth-flip-card.is-flipped .auth-flip-front {
+    pointer-events: none;
+}
+
+.auth-flip-card.is-flipped .auth-flip-back {
+    pointer-events: auto;
+}
+
+.input-group-text[data-password-toggle] {
+    cursor: pointer;
+}
+
+.text-brand-gold {
+    color: #c5a04a !important;
+}
+
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link:hover,
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link.active {
+    color: #c5a04a;
+}
+
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link:hover::before,
+.startbar .startbar-menu .navbar-nav .nav-item .nav-link.active::before {
+    border-color: #c5a04a !important;
+    background-color: #c5a04a !important;
+}
