@@ -19,11 +19,23 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="intro">Intro</label>
-                    <textarea class="form-control" id="intro" name="intro" rows="4">{{ old('intro', $post->intro) }}</textarea>
+                    @include('admin.partials.rich-text-field', [
+                        'id' => 'intro',
+                        'name' => 'intro',
+                        'value' => old('intro', $post->intro),
+                        'rows' => 4,
+                        'oldKey' => 'intro',
+                    ])
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="body">Body</label>
-                    <textarea class="form-control" id="body" name="body" rows="12">{{ old('body', $post->body) }}</textarea>
+                    @include('admin.partials.rich-text-field', [
+                        'id' => 'body',
+                        'name' => 'body',
+                        'value' => old('body', $post->body),
+                        'rows' => 12,
+                        'oldKey' => 'body',
+                    ])
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="tips_text">Tips <span class="text-muted fw-normal">(one per line)</span></label>
@@ -41,7 +53,13 @@
             <div class="card-body pt-0">
                 <div class="mb-3">
                     <label class="form-label" for="quote_text">Quote text</label>
-                    <textarea class="form-control" id="quote_text" name="quote_text" rows="3">{{ old('quote_text', $quote['text'] ?? '') }}</textarea>
+                    @include('admin.partials.rich-text-field', [
+                        'id' => 'quote_text',
+                        'name' => 'quote_text',
+                        'value' => old('quote_text', $quote['text'] ?? ''),
+                        'rows' => 3,
+                        'oldKey' => 'quote_text',
+                    ])
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="quote_name">Quote attribution</label>
@@ -80,8 +98,15 @@
                     <input type="text" class="form-control" id="tags_text" name="tags_text" value="{{ $tagsText }}">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Image URL</label>
-                    <input type="text" class="form-control" id="image" name="image" value="{{ old('image', $post->image) }}" placeholder="/photos/... or full URL">
+                    <label class="form-label" for="image">Image</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control cms-image-url" id="image" name="image" value="{{ old('image', $post->image) }}" placeholder="/photos/... or upload">
+                        <button type="button" class="btn btn-outline-secondary" data-media-library-pick data-target="#image" data-title="Choose image">Library</button>
+                        <label class="btn btn-outline-secondary mb-0">
+                            Upload
+                            <input type="file" class="d-none cms-image-upload" accept="image/*" data-target="#image">
+                        </label>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="seo_title">SEO title</label>
@@ -90,6 +115,8 @@
                 <div class="mb-3">
                     <label class="form-label" for="seo_description">SEO description</label>
                     <textarea class="form-control" id="seo_description" name="seo_description" rows="3">{{ old('seo_description', $post->seo_description) }}</textarea>
+                    <label class="form-label mt-3" for="seo_keywords">SEO keywords</label>
+                    <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" value="{{ old('seo_keywords', $post->seo_keywords) }}" placeholder="Comma-separated keywords">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="published_at">Publish date</label>

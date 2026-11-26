@@ -14,6 +14,7 @@ class Page extends Model
         'title',
         'seo_title',
         'seo_description',
+        'seo_keywords',
         'hero_image',
         'content',
         'is_published',

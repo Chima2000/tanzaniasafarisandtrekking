@@ -1,23 +1,23 @@
 @extends('layouts.aventour')
 
-@section('title', 'Blog | Tanzania Safaris and Trekking')
-@section('meta_description', 'Safari tips, Kilimanjaro trek advice, and Northern Circuit destination stories from Tanzania Safaris and Trekking.')
+@section('title', $page?->seo_title ?? 'Blog | Tanzania Safaris and Trekking')
+@section('meta_description', $page?->seo_description ?? 'Safari tips, Kilimanjaro trek advice, and Northern Circuit destination stories from Tanzania Safaris and Trekking.')
 @section('canonical', route('blog'))
 
 @section('content')
     @include('partials.aventour.page-title', [
-        'title' => 'Blog',
+        'title' => $pageContent['page_title'] ?? 'Blog',
         'bg' => $pageBg,
         'crumbs' => [
-            ['label' => 'Blog'],
+            ['label' => $pageContent['page_title'] ?? 'Blog'],
         ],
     ])
 
-    <section class="news-section sec-pad-3">
+    <section class="news-section sec-pad-3" data-cms-section="blog-main">
         <div class="auto-container">
             <div class="sec-title centred mb_40">
-                <div class="sub-title"><i class="flaticon-parachuting"></i><span>Stories & Guides</span></div>
-                <h2>Ideas for Your Next Tanzania Adventure</h2>
+                <div class="sub-title"><i class="flaticon-parachuting"></i><span data-cms-field="subtitle">{{ $pageContent['subtitle'] ?? 'Stories & Guides' }}</span></div>
+                <h2 data-cms-field="intro">{{ $pageContent['intro'] ?? 'Ideas for Your Next Tanzania Adventure' }}</h2>
             </div>
             <div class="row clearfix">
                 @foreach ($posts as $post)

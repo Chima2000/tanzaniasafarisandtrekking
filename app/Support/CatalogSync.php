@@ -28,26 +28,38 @@ class CatalogSync
 
         foreach ($this->catalog->packagesFromFilesystem() as $index => $package) {
             $enriched = $this->catalog->enrichPackage($package);
+            $existing = Package::query()->where('slug', $enriched['slug'])->first();
+            $defaults = PackagePricing::defaultsFor($enriched);
+
+            $attributes = [
+                'name' => $enriched['name'],
+                'location' => $enriched['location'],
+                'duration' => $enriched['duration'],
+                'category' => $enriched['category'],
+                'rating' => $enriched['rating'],
+                'image' => $enriched['image'],
+                'images' => $enriched['images'],
+                'photo_count' => $enriched['photo_count'],
+                'overview' => $enriched['overview'] ?? null,
+                'itinerary' => $enriched['itinerary'] ?? [],
+                'includes' => $enriched['includes'] ?? [],
+                'excludes' => $enriched['excludes'] ?? [],
+                'is_published' => true,
+                'is_featured' => $index < 6,
+                'sort_order' => $index + 1,
+            ];
+
+            if ($existing === null || $existing->cost_per_person === null) {
+                $attributes['cost_per_person'] = $defaults['cost_per_person'];
+            }
+
+            if ($existing === null || $existing->profit_per_person === null) {
+                $attributes['profit_per_person'] = $defaults['profit_per_person'];
+            }
 
             Package::query()->updateOrCreate(
                 ['slug' => $enriched['slug']],
-                [
-                    'name' => $enriched['name'],
-                    'location' => $enriched['location'],
-                    'duration' => $enriched['duration'],
-                    'category' => $enriched['category'],
-                    'rating' => $enriched['rating'],
-                    'image' => $enriched['image'],
-                    'images' => $enriched['images'],
-                    'photo_count' => $enriched['photo_count'],
-                    'overview' => $enriched['overview'] ?? null,
-                    'itinerary' => $enriched['itinerary'] ?? [],
-                    'includes' => $enriched['includes'] ?? [],
-                    'excludes' => $enriched['excludes'] ?? [],
-                    'is_published' => true,
-                    'is_featured' => $index < 6,
-                    'sort_order' => $index + 1,
-                ]
+                $attributes
             );
 
             $count++;
@@ -142,64 +154,37 @@ class CatalogSync
 
     public function syncPages(): void
     {
-        $defaults = [
-            'home' => [
-                'title' => 'Home',
-                'seo_title' => 'Tanzania Safaris and Trekking',
-                'seo_description' => 'Plan safari and Kilimanjaro adventures across Tanzania with local experts.',
-                'content' => [
-                    'hero_kicker' => 'Tanzania Safaris',
-                    'hero_title' => 'Wildlife, Kilimanjaro & Day Adventures',
-                    'hero_subtitle' => 'Plan unforgettable safaris and treks across Tanzania with local experts.',
-                ],
-            ],
-            'about' => [
-                'title' => 'About Us',
-                'seo_title' => 'About Us | Tanzania Safaris and Trekking',
-                'seo_description' => 'Learn about Tanzania Safaris and Trekking and how we craft safari and Kilimanjaro journeys.',
-                'content' => [
-                    'subtitle' => 'Behind the Adventure',
-                    'heading' => 'Inspired by Tanzania, Designed for Your Journey',
-                    'body' => 'We craft safari and Kilimanjaro experiences across Serengeti, Ngorongoro, Tarangire, and beyond—personal itineraries with trusted local guides, careful pacing, and authentic wilderness moments.',
-                    'feature_one_title' => 'Curated With Care',
-                    'feature_one_body' => 'Designed for comfort, quality and unforgettable memories.',
-                    'feature_two_title' => 'Explore With Ease',
-                    'feature_two_body' => 'Travel made smooth, simple, and worry-free for you.',
-                    'cta_label' => 'Explore Packages',
-                ],
-            ],
-            'contact' => [
-                'title' => 'Contact Us',
-                'seo_title' => 'Contact Us | Tanzania Safaris and Trekking',
-                'seo_description' => 'Contact Tanzania Safaris and Trekking for safari and Kilimanjaro trip planning support.',
-                'content' => [
-                    'heading' => 'Reach Out to Us',
-                    'body' => 'Find answers in our Faq section or contact us directly for more help.',
-                    'form_intro' => 'Send a message and our team will reply with tailored trip advice.',
-                ],
-            ],
-            'faq' => [
-                'title' => "Faq's",
-                'seo_title' => "Faq's | Tanzania Safaris and Trekking",
-                'seo_description' => 'Frequently asked questions about Tanzania safaris, Kilimanjaro treks, and booking support.',
-                'content' => [
-                    'sidebar_heading' => 'Let us guide you—reach out anytime.',
-                    'sidebar_body' => 'Browse common questions or contact our team for a custom itinerary.',
-                ],
-            ],
-        ];
+        $defaults = app(PageBlueprint::class)->seedDefaults();
 
         foreach ($defaults as $slug => $page) {
-            Page::query()->updateOrCreate(
-                ['slug' => $slug],
-                [
+            $existing = Page::query()->where('slug', $slug)->first();
+
+            if ($existing === null) {
+                Page::query()->create([
+                    'slug' => $slug,
                     'title' => $page['title'],
                     'seo_title' => $page['seo_title'],
                     'seo_description' => $page['seo_description'],
                     'content' => $page['content'],
                     'is_published' => true,
-                ]
-            );
+                ]);
+
+                continue;
+            }
+
+            $mergedContent = array_merge($page['content'], (array) $existing->content);
+
+            if ($slug === 'home' && empty($existing->content['hero_slides'])) {
+                $mergedContent['hero_slides'] = app(HomeHeroSlides::class)->resolve((array) $existing->content);
+            }
+
+            $existing->fill([
+                'title' => $existing->title ?: $page['title'],
+                'seo_title' => $existing->seo_title ?: $page['seo_title'],
+                'seo_description' => $existing->seo_description ?: $page['seo_description'],
+                'content' => $mergedContent,
+                'is_published' => $existing->is_published ?? true,
+            ])->save();
         }
     }
 

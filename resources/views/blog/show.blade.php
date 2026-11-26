@@ -2,39 +2,15 @@
 
 @section('title', $post['seo_title'])
 @section('meta_description', $post['seo_description'])
+@section('meta_keywords', $post['seo_keywords'] ?? '')
 @section('canonical', route('blog.show', $post['slug']))
-
-@push('head')
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="{{ $post['seo_title'] }}">
-    <meta property="og:description" content="{{ $post['seo_description'] }}">
-    <meta property="og:url" content="{{ route('blog.show', $post['slug']) }}">
-    <meta property="og:image" content="{{ url($post['image']) }}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $post['seo_title'] }}">
-    <meta name="twitter:description" content="{{ $post['seo_description'] }}">
-    <meta name="twitter:image" content="{{ url($post['image']) }}">
-    <script type="application/ld+json">
-        {!! json_encode([
-            '@context' => 'https://schema.org',
-            '@type' => 'BlogPosting',
-            'headline' => $post['title'],
-            'description' => $post['seo_description'],
-            'image' => url($post['image']),
-            'datePublished' => $post['date'],
-            'author' => [
-                '@type' => 'Person',
-                'name' => $post['author'],
-            ],
-            'publisher' => [
-                '@type' => 'Organization',
-                'name' => 'Tanzania Safaris and Trekking',
-                'url' => url('/'),
-            ],
-            'mainEntityOfPage' => route('blog.show', $post['slug']),
-        ], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT) !!}
-    </script>
-@endpush
+@section('og_type', 'article')
+@section('og_title', $post['seo_title'])
+@section('og_description', $post['seo_description'])
+@section('og_image', absolute_url($post['image']) ?? '')
+@section('twitter_title', $post['seo_title'])
+@section('twitter_description', $post['seo_description'])
+@section('twitter_image', absolute_url($post['image']) ?? '')
 
 @section('content')
     <section class="page-title pt_150 pb_150 centred">
@@ -67,7 +43,7 @@
                     <article class="blog-details-content">
                         <div class="content-one mb_35">
                             <figure class="image-box"><img src="{{ $post['image'] }}" alt="{{ $post['title'] }}"></figure>
-                            <p>{{ $post['intro'] }}</p>
+                            <x-rich-text :content="$post['intro'] ?? null" />
                         </div>
 
                         @foreach ($post['sections'] as $section)
@@ -75,10 +51,10 @@
                                 <div class="group-title mb_20">
                                     <h2>{{ $section['title'] }}</h2>
                                 </div>
-                                <p>{{ $section['body'] }}</p>
-                                <ul class="list-item clearfix">
+                                <x-rich-text :content="$section['body'] ?? null" />
+                                <ul class="list-item clearfix has-internal-links">
                                     @foreach ($section['points'] as $point)
-                                        <li><i class="flaticon-takeoff"></i><span>{{ $point }}</span></li>
+                                        <li><i class="flaticon-takeoff"></i><span>{!! linked($point) !!}</span></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -90,7 +66,7 @@
                                         <div class="shape" style="background-image: url(/aventour/assets/images/shape/shape-13.png);"></div>
                                         <img src="/aventour/assets/images/icons/icon-16.png" alt="">
                                     </div>
-                                    <h3>{{ $post['quote']['text'] }}</h3>
+                                    <x-rich-text :content="$post['quote']['text'] ?? null" />
                                     <span class="name">{{ $post['quote']['name'] }}</span>
                                 </blockquote>
                             @endif
@@ -101,9 +77,9 @@
                                 <div class="group-title mb_20">
                                     <h2>Practical Tips</h2>
                                 </div>
-                                <ul class="list-item clearfix">
+                                <ul class="list-item clearfix has-internal-links">
                                     @foreach ($post['tips'] as $tip)
-                                        <li><i class="flaticon-takeoff"></i><span>{{ $tip }}</span></li>
+                                        <li><i class="flaticon-takeoff"></i><span>{!! linked($tip) !!}</span></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -182,8 +158,8 @@
                             <div class="widget-content">
                                 <ul class="category-list clearfix">
                                     <li><a href="{{ route('destinations.index') }}"><span>Destinations</span></a></li>
-                                    <li><a href="{{ route('packages.index', ['category' => 'Safari']) }}"><span>Safari Packages</span></a></li>
-                                    <li><a href="{{ route('packages.index', ['category' => 'Trekking']) }}"><span>Kilimanjaro Treks</span></a></li>
+                                    <li><a href="{{ route('packages.safari') }}"><span>Safari Packages</span></a></li>
+                                    <li><a href="{{ route('packages.trekking') }}"><span>Kilimanjaro Treks</span></a></li>
                                     <li><a href="{{ route('contact') }}"><span>Plan Your Trip</span></a></li>
                                 </ul>
                             </div>

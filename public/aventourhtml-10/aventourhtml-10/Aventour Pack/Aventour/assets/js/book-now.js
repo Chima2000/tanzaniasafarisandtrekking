@@ -314,6 +314,37 @@
     refreshSummary();
   });
 
+  function finishRequestUi() {
+    if (window.SiteAjaxLoader) {
+      window.SiteAjaxLoader.hide();
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      if (submitBtn.dataset._label) {
+        submitBtn.innerHTML = submitBtn.dataset._label;
+      }
+    }
+  }
+
+  function closeBookingModal() {
+    const bookingModal = document.getElementById('packageBookingModal');
+    if (bookingModal && !bookingModal.hidden) {
+      bookingModal.hidden = true;
+      bookingModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  function showNotice(options) {
+    if (window.SiteNotice) {
+      window.SiteNotice.show(options);
+      return;
+    }
+    if (options.message) {
+      window.console?.info(options.message);
+    }
+  }
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -347,11 +378,19 @@
     })
       .then((response) => response.json().then((data) => ({ ok: response.ok, status: response.status, data })).catch(() => ({ ok: false, status: response.status, data: null })))
       .then((res) => {
+        finishRequestUi();
+
         if (res.ok && res.data?.ok) {
-          window.alert(res.data.message || 'Your booking request has been sent.');
           form.reset();
           maxReached = 1;
           setStep(1);
+          closeBookingModal();
+          showNotice({
+            type: 'success',
+            eyebrow: 'Booking received',
+            title: 'Thank you!',
+            message: res.data.message || 'Your booking request has been sent.',
+          });
           return;
         }
 
@@ -369,20 +408,24 @@
         if (firstErrorStep >= 0) {
           setStep(firstErrorStep + 1);
         }
+
+        const firstError = Object.values(errors)[0];
+        const errorMessage = Array.isArray(firstError) ? firstError[0] : (firstError || 'Please check the form and try again.');
+        showNotice({
+          type: 'error',
+          eyebrow: 'Booking',
+          title: 'Could not send',
+          message: String(errorMessage),
+        });
       })
       .catch(() => {
-        window.alert('Sorry, we could not send your booking request. Please try again.');
-      })
-      .finally(() => {
-        if (window.SiteAjaxLoader) {
-          window.SiteAjaxLoader.hide();
-        }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          if (submitBtn.dataset._label) {
-            submitBtn.innerHTML = submitBtn.dataset._label;
-          }
-        }
+        finishRequestUi();
+        showNotice({
+          type: 'error',
+          eyebrow: 'Booking',
+          title: 'Could not send',
+          message: 'Sorry, we could not send your booking request. Please try again.',
+        });
       });
   });
 
@@ -393,6 +436,11 @@
   setStep(current);
 
   if (form.dataset.successMessage) {
-    window.alert(form.dataset.successMessage);
+    showNotice({
+      type: 'success',
+      eyebrow: 'Booking received',
+      title: 'Thank you!',
+      message: form.dataset.successMessage,
+    });
   }
 })();

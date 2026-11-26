@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Support\RichText;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -39,6 +40,7 @@ class StoreBlogPostRequest extends FormRequest
             'image' => ['nullable', 'string', 'max:500'],
             'seo_title' => ['nullable', 'string', 'max:255'],
             'seo_description' => ['nullable', 'string', 'max:500'],
+            'seo_keywords' => ['nullable', 'string', 'max:500'],
             'intro' => ['nullable', 'string'],
             'body' => ['nullable', 'string'],
             'tips_text' => ['nullable', 'string'],
@@ -65,7 +67,17 @@ class StoreBlogPostRequest extends FormRequest
         if (! empty($validated['sections_json'])) {
             $decoded = json_decode($validated['sections_json'], true);
             if (is_array($decoded)) {
-                $sections = $decoded;
+                foreach ($decoded as $section) {
+                    if (! is_array($section)) {
+                        continue;
+                    }
+
+                    if (isset($section['body'])) {
+                        $section['body'] = RichText::sanitize($section['body']);
+                    }
+
+                    $sections[] = $section;
+                }
             }
         }
 
@@ -89,10 +101,11 @@ class StoreBlogPostRequest extends FormRequest
             'image' => $validated['image'] ?? null,
             'seo_title' => $validated['seo_title'] ?? null,
             'seo_description' => $validated['seo_description'] ?? null,
-            'intro' => $validated['intro'] ?? null,
-            'body' => $validated['body'] ?? null,
+            'seo_keywords' => $validated['seo_keywords'] ?? null,
+            'intro' => RichText::sanitize($validated['intro'] ?? null),
+            'body' => RichText::sanitize($validated['body'] ?? null),
             'quote' => $quoteText !== '' ? [
-                'text' => $quoteText,
+                'text' => RichText::sanitize($quoteText),
                 'name' => $validated['quote_name'] ?? 'Admin',
             ] : null,
             'sections' => $sections,

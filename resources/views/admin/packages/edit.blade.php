@@ -11,9 +11,17 @@
         <a href="{{ route('packages.show', $package->slug) }}" class="btn btn-outline-primary" target="_blank" rel="noopener">View live</a>
     </div>
 
-    <form method="POST" action="{{ route('admin.packages.update', $package) }}">
+    <form method="POST" action="{{ route('admin.packages.update', $package) }}" data-upload-url="{{ route('admin.media.upload') }}">
         @csrf
         @method('PUT')
         @include('admin.packages._form', ['submitLabel' => 'Save changes'])
     </form>
+
+    @include('admin.partials.live-preview', [
+        'previewUrl' => route('packages.show', $package->slug),
+    ])
 @endsection
+
+@push('scripts')
+@include('admin.partials.media-upload-script')
+@endpush

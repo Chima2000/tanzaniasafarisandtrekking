@@ -3,10 +3,13 @@
 namespace App\Http\Requests;
 
 use App\Support\BookNowOptions;
+use App\Support\FormSpamGuard;
+use App\Support\PackagePricing;
 use App\Support\TourCatalog;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class StoreBookNowRequest extends FormRequest
 {
@@ -38,7 +41,31 @@ class StoreBookNowRequest extends FormRequest
             'travel_date' => ['required', 'date', 'after_or_equal:today'],
             'notes' => ['nullable', 'string', 'max:5000'],
             'package' => ['nullable', 'string', Rule::in($packageSlugs)],
+            ...FormSpamGuard::rules(),
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator): void {
+            FormSpamGuard::validate($this, $validator);
+
+            $packageSlug = $this->input('package');
+            $travelDate = $this->input('travel_date');
+
+            if (! is_string($packageSlug) || $packageSlug === '' || ! is_string($travelDate) || $travelDate === '') {
+                return;
+            }
+
+            $package = app(TourCatalog::class)->findPackage($packageSlug);
+            if ($package === null) {
+                return;
+            }
+
+            if (! PackagePricing::isDateAvailable($travelDate, $package['blocked_dates'] ?? [])) {
+                $validator->errors()->add('travel_date', 'That travel date is not available for this package. Please choose another date.');
+            }
+        });
     }
 
     /**
@@ -57,6 +84,7 @@ class StoreBookNowRequest extends FormRequest
             'accommodation.required' => 'Please choose an accommodation style.',
             'travel_date.required' => 'Please choose your travel start date.',
             'travel_date.after_or_equal' => 'Travel date must be today or a future date.',
+            ...FormSpamGuard::messages(),
         ];
     }
 
@@ -88,6 +116,10 @@ class StoreBookNowRequest extends FormRequest
         $travelDate = (string) $validated['travel_date'];
         $notes = trim((string) ($validated['notes'] ?? ''));
         $phone = trim((string) ($validated['phone'] ?? ''));
+        $pricePerPerson = $package !== null ? (float) ($package['price_per_person'] ?? 0) : 0.0;
+        $estimatedTotal = $pricePerPerson > 0
+            ? PackagePricing::estimatedTotal($pricePerPerson, $adults, $children)
+            : null;
 
         $travellerParts = [$adults.' '.Str::plural('adult', $adults)];
         if ($children > 0) {
@@ -107,6 +139,11 @@ class StoreBookNowRequest extends FormRequest
             array_unshift($lines, 'Package: '.$package['name']);
         }
 
+        if ($pricePerPerson > 0) {
+            $lines[] = 'Price per person: '.PackagePricing::formatUsd($pricePerPerson);
+            $lines[] = 'Estimated total: '.PackagePricing::formatUsd((float) $estimatedTotal);
+        }
+
         if (! empty($validated['interest'])) {
             $lines[] = 'Focus: '.$validated['interest'];
         }
@@ -124,6 +161,8 @@ class StoreBookNowRequest extends FormRequest
             'phone' => $phone !== '' ? $phone : null,
             'package' => $packageSlug,
             'package_name' => $package['name'] ?? null,
+            'price_per_person' => $pricePerPerson > 0 ? $pricePerPerson : null,
+            'estimated_total' => $estimatedTotal,
             'lines' => $lines,
         ];
     }

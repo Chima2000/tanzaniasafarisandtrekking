@@ -19,7 +19,7 @@ class SiteSettingController extends Controller
 
     public function update(UpdateSiteSettingsRequest $request, SiteSettings $settings): RedirectResponse
     {
-        $settings->putMany($request->validated());
+        $settings->putMany($request->settingsPayload());
 
         return redirect()
             ->route('admin.settings.edit')

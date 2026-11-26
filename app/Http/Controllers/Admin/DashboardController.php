@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
 use App\Models\BookingRequest;
+use App\Models\ContactSubmission;
 use App\Support\TourCatalog;
 use Illuminate\View\View;
 
@@ -21,7 +22,10 @@ class DashboardController extends Controller
             'publishedBlogPostCount' => BlogPost::query()->published()->count(),
             'bookingCount' => BookingRequest::query()->count(),
             'newBookingCount' => BookingRequest::query()->where('status', 'new')->count(),
+            'contactCount' => ContactSubmission::query()->count(),
+            'newContactCount' => ContactSubmission::query()->where('status', 'new')->count(),
             'recentBookings' => BookingRequest::query()->latest()->limit(5)->get(),
+            'recentContacts' => ContactSubmission::query()->latest()->limit(5)->get(),
             'recentPosts' => BlogPost::query()->latest()->limit(5)->get(),
             'featuredPackages' => $packages->take(5)->values(),
         ]);

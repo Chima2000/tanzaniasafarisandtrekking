@@ -8,7 +8,13 @@
                 </div>
                 <div class="mb-0">
                     <label class="form-label" for="answer">Answer</label>
-                    <textarea class="form-control" id="answer" name="answer" rows="8" required>{{ old('answer', $faq->answer) }}</textarea>
+                    @include('admin.partials.rich-text-field', [
+                        'id' => 'answer',
+                        'name' => 'answer',
+                        'value' => old('answer', $faq->answer),
+                        'rows' => 8,
+                        'oldKey' => 'answer',
+                    ])
                 </div>
             </div>
         </div>

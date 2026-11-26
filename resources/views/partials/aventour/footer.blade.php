@@ -11,7 +11,7 @@
                                 : 'https://wa.me/'.preg_replace('/\D+/', '', $footerPhone);
                         @endphp
                         <figure class="footer-logo">@include('partials.aventour.brand-logo')</figure>
-                        <p>{{ $siteSettings['footer_about'] ?? 'Expert-led safaris and Kilimanjaro treks across Tanzania.' }}</p>
+                        <x-rich-text :content="$siteSettings['footer_about'] ?? null" fallback="Expert-led safaris and Kilimanjaro treks across Tanzania." />
                         <ul class="download-list clearfix">
                             <li>
                                 <a href="{{ $footerWhatsappUrl }}" target="_blank" rel="noopener">
@@ -37,9 +37,9 @@
                         </div>
                         <div class="widget-content">
                             <ul class="links-list clearfix">
-                                <li><a href="{{ route('packages.index', ['category' => 'Safari']) }}">Wildlife Tours</a></li>
-                                <li><a href="{{ route('packages.index', ['category' => 'Trekking']) }}">Kilimanjaro Treks</a></li>
-                                <li><a href="{{ route('packages.index', ['category' => 'Day Trip']) }}">Day Adventures</a></li>
+                                <li><a href="{{ route('packages.safari') }}">Wildlife Tours</a></li>
+                                <li><a href="{{ route('packages.trekking') }}">Kilimanjaro Treks</a></li>
+                                <li><a href="{{ route('packages.day-trips') }}">Day Adventures</a></li>
                                 <li><a href="{{ route('destinations.show', 'serengeti') }}">Serengeti</a></li>
                                 <li><a href="{{ route('destinations.show', 'ngorongoro') }}">Ngorongoro</a></li>
                                 <li><a href="{{ route('destinations.show', 'tarangire') }}">Tarangire</a></li>

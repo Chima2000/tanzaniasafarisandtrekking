@@ -2,6 +2,8 @@
 
 use App\Mail\BookNowRequestMail;
 use App\Models\BookingRequest;
+use App\Support\FormSpamGuard;
+use App\Support\TourCatalog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 
@@ -12,7 +14,7 @@ it('renders the book now page with the template booking form', function () {
 
     $response->assertOk();
     $response->assertSee('Book Now', false);
-    $response->assertSee('Request Your Safari or Trek', false);
+    $response->assertSee('data-cms-field="heading"', false);
     $response->assertSee('Tell Us About Your Trip', false);
     $response->assertSee('Let’s Lock In Your Dates', false);
     $response->assertSee('booking-section', false);
@@ -23,6 +25,9 @@ it('renders the book now page with the template booking form', function () {
     $response->assertSee('Where do you want to go?', false);
     $response->assertSee('Budget and stay style', false);
     $response->assertSee('Send Booking Request', false);
+    $response->assertSee('ohnohoney', false);
+    $response->assertSee('name="company_website"', false);
+    $response->assertSee('name="form_guard"', false);
     $response->assertSee('/aventour/assets/js/book-now.js', false);
     $response->assertSee(route('book-now.store', absolute: false), false);
     $response->assertDontSee('id="tripPlanner"', false);
@@ -45,12 +50,12 @@ it('stores a valid booking request and emails the desk', function () {
     Mail::fake();
     $this->travelTo('2026-09-06 12:00:00');
 
-    $destination = app(\App\Support\TourCatalog::class)->destinations()->first();
+    $destination = app(TourCatalog::class)->destinations()->first();
 
     expect($destination)->not->toBeNull();
 
     $this->from(route('book-now'))
-        ->post(route('book-now.store'), [
+        ->post(route('book-now.store'), FormSpamGuard::mergeInto([
             'full_name' => 'Alex Booker',
             'email' => 'alex@example.com',
             'phone' => '+255700000222',
@@ -63,7 +68,7 @@ it('stores a valid booking request and emails the desk', function () {
             'accommodation' => 'Comfort mid-range',
             'travel_date' => '2026-12-15',
             'notes' => 'Prefer a mid-range lodge.',
-        ])
+        ]))
         ->assertRedirectToRoute('book-now')
         ->assertSessionHas('success');
 
@@ -113,5 +118,16 @@ it('exposes edit pens on the request summary for quick changes', function () {
     expect($script)
         ->toContain('data-summary-edit')
         ->toContain('book-now-summary__edit')
-        ->toContain('editSummaryItem');
+        ->toContain('editSummaryItem')
+        ->toContain('SiteNotice')
+        ->not->toContain('window.alert');
+});
+
+it('renders the template center notice popup instead of a browser alert', function () {
+    $this->get(route('book-now'))
+        ->assertOk()
+        ->assertSee('id="siteNoticePopup"', false)
+        ->assertSee('close-search', false)
+        ->assertSee('/aventour/assets/js/site-notice.js', false)
+        ->assertSee('/aventour/assets/css/site-notice.css', false);
 });

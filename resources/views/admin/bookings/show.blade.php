@@ -38,6 +38,12 @@
                         <dt class="col-sm-4">Travellers</dt>
                         <dd class="col-sm-8">{{ $booking->adults }} adults, {{ $booking->children }} children</dd>
 
+                        <dt class="col-sm-4">Price / person</dt>
+                        <dd class="col-sm-8">{{ $booking->price_per_person !== null ? '$'.number_format((float) $booking->price_per_person, 2) : '—' }}</dd>
+
+                        <dt class="col-sm-4">Estimated total</dt>
+                        <dd class="col-sm-8">{{ $booking->estimated_total !== null ? '$'.number_format((float) $booking->estimated_total, 2) : '—' }}</dd>
+
                         <dt class="col-sm-4">Accommodation</dt>
                         <dd class="col-sm-8">{{ $booking->accommodation ?: '—' }}</dd>
 

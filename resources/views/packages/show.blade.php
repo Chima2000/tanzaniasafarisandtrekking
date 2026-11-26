@@ -1,27 +1,38 @@
 @extends('layouts.aventour')
 
-@section('title', $package['name'].' | Tanzania Safaris and Trekking')
-
 @php
+    $packageSeoTitle = $package['seo_title'] ?? site_title($package['name']);
+    $packageSeoDescription = $package['seo_description']
+        ?? truncate_meta(strip_tags((string) ($package['overview'] ?? '')))
+        ?: site_settings('default_meta_description');
+    $packageSeoKeywords = $package['seo_keywords'] ?? '';
+    $packageOgImage = absolute_url($package['image'] ?? null);
     $bodyClass = trim(($bodyClass ?? '').' has-tour-sticky');
 @endphp
 
+@section('title', $packageSeoTitle)
+@section('meta_description', $packageSeoDescription)
+@section('meta_keywords', $packageSeoKeywords)
+@section('canonical', route('packages.show', $package['slug']))
+@section('og_type', 'product')
+@section('og_title', $packageSeoTitle)
+@section('og_description', $packageSeoDescription)
+@section('og_image', $packageOgImage ?? '')
+@section('twitter_title', $packageSeoTitle)
+@section('twitter_description', $packageSeoDescription)
+@section('twitter_image', $packageOgImage ?? '')
+
 @section('content')
     @php
-        $categoryCrumb = match ($package['category']) {
-            'Safari' => 'Safari Packages',
-            'Trekking' => 'Kilimanjaro Treks',
-            'Day Trip' => 'Day Adventures',
-            'Cultural' => 'Cultural Experiences',
-            default => 'Tour Packages',
-        };
+        $categoryCrumb = \App\Support\PackageCategories::label($package['category']);
+        $categoryUrl = \App\Support\PackageCategories::url($package['category']);
     @endphp
     @include('partials.aventour.page-title', [
         'title' => $package['name'],
         'bg' => $package['image'],
         'crumbs' => [
             ['label' => 'Tour Packages', 'url' => route('packages.index')],
-            ['label' => $categoryCrumb, 'url' => route('packages.index', ['category' => $package['category']])],
+            ['label' => $categoryCrumb, 'url' => $categoryUrl],
             ['label' => $package['name']],
         ],
     ])
@@ -67,7 +78,7 @@
                             <div class="tab active-tab tour-section" id="tab-1">
                                 <div class="overview-content">
                                     <figure class="image-box"><img src="{{ $package['image'] }}" alt="{{ $package['name'] }}"></figure>
-                                    <p>{{ $package['overview'] }}</p>
+                                    <x-rich-text :content="$package['overview'] ?? null" />
                                     <ul class="list-item clearfix">
                                         <li><div class="icon"><img src="/aventour/assets/images/icons/icon-65.png" alt=""></div><span>Tour Type</span><span>{{ $package['category'] }}</span></li>
                                         <li><div class="icon"><img src="/aventour/assets/images/icons/icon-66.png" alt=""></div><span>Departure Location</span><span>Arusha / Moshi area</span></li>
@@ -88,12 +99,15 @@
                                             @foreach ($package['itinerary'] as $item)
                                                 @php
                                                     $dayLabel = strtoupper((string) ($item['day'] ?? ''));
-                                                    $description = collect($item['points'] ?? [])
-                                                        ->filter()
-                                                        ->map(fn (string $point): string => rtrim($point, '.'))
-                                                        ->implode('. ');
-                                                    if ($description !== '') {
-                                                        $description .= '.';
+                                                    $description = trim((string) ($item['description'] ?? ''));
+                                                    if ($description === '') {
+                                                        $description = collect($item['points'] ?? [])
+                                                            ->filter()
+                                                            ->map(fn (string $point): string => rtrim($point, '.'))
+                                                            ->implode('. ');
+                                                        if ($description !== '') {
+                                                            $description .= '.';
+                                                        }
                                                     }
                                                 @endphp
                                                 <details class="itinerary-day" @if ($loop->first) open @endif>
@@ -108,9 +122,7 @@
                                                                 <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}">
                                                             </figure>
                                                         @endif
-                                                        @if ($description !== '')
-                                                            <p class="itinerary-day__description">{{ $description }}</p>
-                                                        @endif
+                                                        <x-rich-text class="itinerary-day__description" :content="$description !== '' ? $description : null" />
                                                         @if (! empty($item['meals']) || ! empty($item['destinations']))
                                                             <dl class="itinerary-day__meta">
                                                                 @if (! empty($item['meals']))
@@ -198,9 +210,9 @@
                                             <p>Items covered in the package.</p>
                                         </div>
                                         <div class="list-text">
-                                            <ul class="list-item">
+                                            <ul class="list-item has-internal-links">
                                                 @foreach ($package['includes'] as $include)
-                                                    <li><i class="flaticon-check"></i><span>{{ $include }}</span></li>
+                                                    <li><i class="flaticon-check"></i><span>{!! linked($include) !!}</span></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -211,9 +223,9 @@
                                             <p>Items not covered in the package.</p>
                                         </div>
                                         <div class="list-text">
-                                            <ul class="list-item">
+                                            <ul class="list-item has-internal-links">
                                                 @foreach ($package['excludes'] as $exclude)
-                                                    <li><i class="flaticon-failed light"></i><span>{{ $exclude }}</span></li>
+                                                    <li><i class="flaticon-failed light"></i><span>{!! linked($exclude) !!}</span></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -230,8 +242,8 @@
                                                 <h4>How do I book this tour?</h4>
                                             </div>
                                             <div class="acc-content current">
-                                                <div class="text">
-                                                    <p>Send an enquiry from this page or contact us directly. We will confirm availability, suggest dates, and share a tailored quote for {{ $package['name'] }}.</p>
+                                                <div class="text has-internal-links">
+                                                    <p>{!! linked('Send an enquiry from this page or contact us directly. We will confirm availability, suggest dates, and share a tailored quote for '.$package['name'].'.') !!}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -241,8 +253,8 @@
                                                 <h4>Can I customize the itinerary?</h4>
                                             </div>
                                             <div class="acc-content">
-                                                <div class="text">
-                                                    <p>Yes. Most safari and trek plans can be adjusted for pace, lodging style, and add-on destinations across the Northern Circuit.</p>
+                                                <div class="text has-internal-links">
+                                                    <p>{!! linked('Yes. Most safari and trek plans can be adjusted for pace, lodging style, and add-on destinations across the Northern Circuit.') !!}</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -263,42 +275,46 @@
                             <div class="tab active-tab tour-section" id="tab-5">
                                 <div class="booking-form">
                                     <h2>Enquire About This Tour</h2>
-                                    <form action="{{ route('contact') }}" method="get">
+                                    <form action="{{ route('contact.store') }}" method="post" class="contact-form">
+                                        @csrf
+                                        @include('partials.aventour.form-spam-guard')
+                                        <input type="hidden" name="source" value="package_enquiry">
+                                        <input type="hidden" name="package" value="{{ $package['slug'] }}">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 single-column">
                                                 <div class="form-group">
                                                     <label>First Name</label>
-                                                    <input type="text" name="fname" placeholder="First name" required>
+                                                    <input type="text" name="fname" placeholder="First name" value="{{ old('fname') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 single-column">
                                                 <div class="form-group">
                                                     <label>Last name</label>
-                                                    <input type="text" name="lname" placeholder="Last name" required>
+                                                    <input type="text" name="lname" placeholder="Last name" value="{{ old('lname') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 single-column">
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" name="email" placeholder="Enter email address" required>
+                                                    <input type="email" name="email" placeholder="Enter email address" value="{{ old('email') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 single-column">
                                                 <div class="form-group">
                                                     <label>Phone</label>
-                                                    <input type="text" name="phone" placeholder="Your ph num" required>
+                                                    <input type="text" name="phone" placeholder="Your ph num" value="{{ old('phone') }}" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 single-column">
                                                 <div class="form-group">
                                                     <label>Subject</label>
-                                                    <input type="text" name="subject" value="{{ $package['name'] }}" readonly>
+                                                    <input type="text" name="subject" value="{{ old('subject', $package['name']) }}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 single-column">
                                                 <div class="form-group">
                                                     <label>Message</label>
-                                                    <textarea name="message" placeholder="Message goes here"></textarea>
+                                                    <textarea name="message" placeholder="Message goes here">{{ old('message') }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 single-column">
@@ -315,12 +331,31 @@
                     <div class="col-lg-4 col-md-12 col-sm-12 sidebar-side">
                         <div class="tour-sidebar">
                             <div class="package-widget mb_30">
-                                <span class="text">Experience</span>
-                                <h3 class="special-text">{{ $package['category'] }}<span> / {{ $package['duration'] }}</span></h3>
+                                <span class="text">Price</span>
+                                <h3 class="special-text">{{ $package['price_label'] ?? '$—' }}<span> / Traveler</span></h3>
+                                <p class="package-sidebar-total">Estimated total: <strong data-sidebar-estimated-total>{{ $package['price_label'] ?? '$—' }}</strong></p>
                                 <div class="booking-form">
-                                    <div class="message-btn">
-                                        <a href="{{ route('book-now', ['package' => $package['slug']]) }}" class="theme-btn"><span>Book Now</span><i class="flaticon-arrow"></i></a>
-                                    </div>
+                                    <form id="packageAvailabilityForm" action="#" method="post">
+                                        <div class="form-group">
+                                            <label>Number of Travelers</label>
+                                            <div class="select-box">
+                                                <select class="wide" name="travelers">
+                                                    @foreach ([1, 2, 3, 4, 5, '6+'] as $count)
+                                                        <option value="{{ $count }}" @selected($count === 2)>{{ $count === '6+' ? '6 & More' : $count.' '.($count === 1 ? 'Person' : 'People') }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="icon"><img src="/aventour/assets/images/icons/icon-5.png" alt=""></div>
+                                            <label>Date</label>
+                                            <input type="text" name="date" placeholder="yyyy-mm-dd" id="datepicker" autocomplete="off" required>
+                                        </div>
+                                        <p class="package-availability-hint" data-availability-hint></p>
+                                        <div class="message-btn">
+                                            <button type="submit" class="theme-btn"><span>Check Availability</span><i class="flaticon-arrow"></i></button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="contact-widget mb_30">
@@ -364,9 +399,18 @@
             </div>
         </section>
     @endif
+
+    @include('partials.package-booking-modal')
 @endsection
 
+@push('styles')
+<link href="/aventour/assets/css/book-now.css?v={{ filemtime(public_path('aventour/assets/css/book-now.css')) }}" rel="stylesheet">
+<link href="/aventour/assets/css/package-booking.css?v={{ filemtime(public_path('aventour/assets/css/package-booking.css')) }}" rel="stylesheet">
+@endpush
+
 @push('scripts')
+<script src="/aventour/assets/js/book-now.js?v={{ filemtime(public_path('aventour/assets/js/book-now.js')) }}"></script>
+<script src="/aventour/assets/js/package-booking.js?v={{ filemtime(public_path('aventour/assets/js/package-booking.js')) }}"></script>
 <script>
 (function ($) {
     const $spy = $('.tour-scroll-spy');

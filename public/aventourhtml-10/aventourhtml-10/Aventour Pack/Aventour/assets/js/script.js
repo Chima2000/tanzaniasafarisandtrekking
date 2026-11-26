@@ -492,6 +492,122 @@
         });
 	}
 
+	if ($('.platform-reviews-section').length) {
+        const reviewCarousels = {};
+
+        const initReviewToggleButtons = (root) => {
+            $(root).find('.platform-review-card').each(function () {
+                const card = this;
+                const quote = card.querySelector('.platform-review-card__quote');
+                const toggle = card.querySelector('.platform-review-card__toggle');
+
+                if (!quote || !toggle) {
+                    return;
+                }
+
+                const isOverflowing = quote.scrollHeight > quote.clientHeight + 2;
+                toggle.hidden = !isOverflowing;
+                toggle.textContent = 'Show more';
+                card.classList.remove('is-expanded');
+            });
+        };
+
+        $('[data-reviews-carousel]').each(function () {
+            const key = this.getAttribute('data-reviews-carousel');
+            reviewCarousels[key] = new Swiper(this, {
+                slidesPerView: 1,
+                spaceBetween: 14,
+                speed: 500,
+                grabCursor: true,
+                watchOverflow: true,
+                loop: false,
+                autoHeight: true,
+                pagination: {
+                    el: `[data-reviews-pagination="${key}"]`,
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: `[data-reviews-next="${key}"]`,
+                    prevEl: `[data-reviews-prev="${key}"]`,
+                },
+                breakpoints: {
+                    575: {
+                        slidesPerView: 1.15,
+                        spaceBetween: 16,
+                        autoHeight: true,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 18,
+                        autoHeight: false,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                        autoHeight: false,
+                    },
+                },
+                on: {
+                    init() {
+                        initReviewToggleButtons(this.el);
+                        window.requestAnimationFrame(() => {
+                            this.updateAutoHeight(0);
+                            this.update();
+                        });
+                    },
+                    resize() {
+                        initReviewToggleButtons(this.el);
+                        this.updateAutoHeight(0);
+                    },
+                    slideChangeTransitionEnd() {
+                        this.updateAutoHeight(0);
+                    },
+                },
+            });
+        });
+
+        $(document).on('click', '.platform-review-card__toggle', function () {
+            const card = this.closest('.platform-review-card');
+            if (!card) {
+                return;
+            }
+
+            const expanded = card.classList.toggle('is-expanded');
+            this.textContent = expanded ? 'Show less' : 'Show more';
+
+            const carouselEl = card.closest('[data-reviews-carousel]');
+            const key = carouselEl?.getAttribute('data-reviews-carousel');
+            if (key && reviewCarousels[key]) {
+                reviewCarousels[key].updateAutoHeight(200);
+            }
+        });
+
+        $(document).on('click', '[data-reviews-tab]', function () {
+            const tabKey = this.getAttribute('data-reviews-tab');
+            const section = this.closest('.platform-reviews-section');
+            if (!section || !tabKey) {
+                return;
+            }
+
+            section.querySelectorAll('[data-reviews-tab]').forEach((tab) => {
+                const isActive = tab === this;
+                tab.classList.toggle('is-active', isActive);
+                tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            section.querySelectorAll('[data-reviews-panel]').forEach((panel) => {
+                const isActive = panel.getAttribute('data-reviews-panel') === tabKey;
+                panel.classList.toggle('is-active', isActive);
+                panel.hidden = !isActive;
+            });
+
+            if (reviewCarousels[tabKey]) {
+                reviewCarousels[tabKey].update();
+                initReviewToggleButtons(reviewCarousels[tabKey].el);
+            }
+        });
+	}
+
 
 
 	//Sortable Masonary with Filters

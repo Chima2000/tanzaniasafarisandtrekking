@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Support\RichText;
 use App\Support\SiteSettings;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -35,6 +36,8 @@ class UpdateSiteSettingsRequest extends FormRequest
             $rules[$key] = ['nullable', 'string', 'max:2000'];
         }
 
+        $rules['hero_subtitle'] = ['nullable', 'string', 'max:20000'];
+        $rules['footer_about'] = ['nullable', 'string', 'max:20000'];
         $rules['email'] = ['nullable', 'email', 'max:254'];
         $rules['facebook_url'] = ['nullable', 'url', 'max:500'];
         $rules['instagram_url'] = ['nullable', 'url', 'max:500'];
@@ -42,5 +45,21 @@ class UpdateSiteSettingsRequest extends FormRequest
         $rules['whatsapp_url'] = ['nullable', 'url', 'max:500'];
 
         return $rules;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function settingsPayload(): array
+    {
+        $validated = $this->validated();
+
+        foreach (['hero_subtitle', 'footer_about'] as $key) {
+            if (array_key_exists($key, $validated)) {
+                $validated[$key] = RichText::sanitize($validated[$key] ?? null);
+            }
+        }
+
+        return $validated;
     }
 }

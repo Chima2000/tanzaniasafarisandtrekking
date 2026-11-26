@@ -14,7 +14,7 @@
             </div>
             <div class="lower-content">
                 <div class="price-rating">
-                    <div class="price"><span class="special-text">{{ $package['category'] }}</span><span class="text"> / Package</span></div>
+                    <div class="price"><span class="special-text">{{ $package['price_label'] ?? '$—' }}</span><span class="text"> / Traveler</span></div>
                     <div class="rating"><i class="flaticon-star"></i><span>{{ $package['rating'] }}</span></div>
                 </div>
                 <div class="lower-box">

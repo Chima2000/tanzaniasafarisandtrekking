@@ -26,7 +26,7 @@
                         <ul class="faq-category clearfix mb_30">
                             <li><a href="{{ route('faq') }}">General Questions</a></li>
                             <li><a href="{{ route('packages.index') }}">Safari Packages</a></li>
-                            <li><a href="{{ route('packages.index', ['category' => 'Trekking']) }}">Kilimanjaro Treks</a></li>
+                            <li><a href="{{ route('packages.trekking') }}">Kilimanjaro Treks</a></li>
                             <li><a href="{{ route('destinations.index') }}">Destinations</a></li>
                             <li><a href="{{ route('contact') }}">Booking Support</a></li>
                         </ul>
@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="acc-content {{ $loop->first ? 'current' : '' }}">
                                         <div class="text">
-                                            <p>{{ $faq->answer }}</p>
+                                            <x-rich-text :content="$faq->answer" />
                                         </div>
                                     </div>
                                 </li>

@@ -57,3 +57,26 @@ it('lists safari and kilimanjaro packages from photos', function () {
     $response->assertSee('id="safari"', false);
     $response->assertSee('id="kilimanjaro"', false);
 });
+
+it('shows tripadvisor and google reviews before the footer', function () {
+    $response = $this->get(route('home'));
+
+    $response->assertOk();
+    $response->assertSee('id="traveler-reviews"', false);
+    $response->assertSee('Rated Excellent on TripAdvisor', false);
+    $response->assertSee('data-reviews-tab="tripadvisor"', false);
+    $response->assertSee('data-reviews-tab="google"', false);
+    $response->assertSee('exceeded every expectation I had', false);
+    $response->assertSee('ta-bubbles', false);
+    $response->assertSee('A Tripadvisor traveler review', false);
+    $response->assertSee('Google review', false);
+    $response->assertDontSee('ShowUserReviews-', false);
+
+    $content = $response->getContent();
+    $reviewsPosition = strpos($content, 'id="traveler-reviews"');
+    $footerPosition = strpos($content, 'class="main-footer');
+
+    expect($reviewsPosition)->not->toBeFalse()
+        ->and($footerPosition)->not->toBeFalse()
+        ->and($reviewsPosition)->toBeLessThan($footerPosition);
+});

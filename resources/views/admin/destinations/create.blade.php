@@ -8,8 +8,12 @@
         <p class="text-muted mb-0">Add a new destination page for the public site.</p>
     </div>
 
-    <form method="POST" action="{{ route('admin.destinations.store') }}">
+    <form method="POST" action="{{ route('admin.destinations.store') }}" data-upload-url="{{ route('admin.media.upload') }}">
         @csrf
         @include('admin.destinations._form', ['submitLabel' => 'Create destination'])
     </form>
 @endsection
+
+@push('scripts')
+@include('admin.partials.media-upload-script')
+@endpush

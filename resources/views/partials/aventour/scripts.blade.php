@@ -12,5 +12,7 @@
 <script src="/aventour/assets/js/jquery.lettering.min.js"></script>
 <script src="/aventour/assets/js/jquery.circleType.js"></script>
 <script src="/aventour/assets/js/jquery-ui.js"></script>
-<script src="/aventour/assets/js/script.js"></script>
+<script src="/aventour/assets/js/script.js?v={{ filemtime(public_path('aventour/assets/js/script.js')) }}"></script>
 <script src="/aventour/assets/js/ajax-loader.js?v={{ filemtime(public_path('aventour/assets/js/ajax-loader.js')) }}"></script>
+<script src="/aventour/assets/js/site-notice.js?v={{ filemtime(public_path('aventour/assets/js/site-notice.js')) }}"></script>
+<script src="/aventour/assets/js/header-search.js?v={{ filemtime(public_path('aventour/assets/js/header-search.js')) }}"></script>

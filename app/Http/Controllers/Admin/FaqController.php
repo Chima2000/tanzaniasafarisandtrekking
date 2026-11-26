@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
+use App\Support\RichText;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -74,7 +75,8 @@ class FaqController extends Controller
         ]);
 
         return [
-            ...$validated,
+            'question' => $validated['question'],
+            'answer' => RichText::sanitize($validated['answer']),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
             'is_published' => $request->boolean('is_published'),
         ];

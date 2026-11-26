@@ -11,7 +11,15 @@
     <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/assets/css/brand-theme.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
     <link href="/aventour/assets/css/ajax-loader.css?v={{ filemtime(public_path('aventour/assets/css/ajax-loader.css')) }}" rel="stylesheet" type="text/css" />
+    <style>
+        .rich-text-field .ql-toolbar.ql-snow { border-top-left-radius: .375rem; border-top-right-radius: .375rem; }
+        .rich-text-field .ql-container.ql-snow { border-bottom-left-radius: .375rem; border-bottom-right-radius: .375rem; font-size: .95rem; }
+        .rich-text-field .ql-editor { min-height: 140px; }
+        .rich-text-field .ql-editor img,
+        .rich-text-field .ql-editor video { max-width: 100%; height: auto; }
+    </style>
     @stack('styles')
 </head>
 <body data-sidebar-size="default">
@@ -69,10 +77,16 @@
     </div>
     {{-- end page-wrapper --}}
 
+    @include('admin.partials.media-picker-modal')
+
     <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/app.js') }}"></script>
     <script src="/aventour/assets/js/ajax-loader.js?v={{ filemtime(public_path('aventour/assets/js/ajax-loader.js')) }}"></script>
+    <script src="{{ asset('admin/assets/js/media-picker.js') }}?v={{ filemtime(public_path('admin/assets/js/media-picker.js')) }}"></script>
+    <script src="{{ asset('admin/assets/libs/quill/quill.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/rich-text-editor.js') }}?v={{ filemtime(public_path('admin/assets/js/rich-text-editor.js')) }}"></script>
+    @include('partials.whatsapp-button')
     @stack('scripts')
 </body>
 </html>

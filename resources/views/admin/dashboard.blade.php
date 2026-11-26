@@ -211,6 +211,9 @@
                     <p class="text-secondary text-truncate mb-0 rounded mt-2 text-center">
                         Review new enquiries in
                         <a href="{{ route('admin.bookings.index') }}" class="text-primary text-decoration-underline">bookings</a>
+                        and
+                        <a href="{{ route('admin.contacts.index') }}" class="text-primary text-decoration-underline">contacts</a>
+                        ({{ $newContactCount ?? 0 }} new)
                     </p>
                 </div>
             </div>

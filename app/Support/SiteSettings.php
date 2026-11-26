@@ -27,6 +27,12 @@ class SiteSettings
             'twitter_url' => '',
             'whatsapp_url' => '',
             'footer_about' => 'Expert-led safaris and Kilimanjaro treks across Tanzania.',
+            'default_meta_title' => 'Tanzania Safaris and Trekking',
+            'default_meta_description' => 'Plan safari and Kilimanjaro adventures across Tanzania with local experts.',
+            'default_meta_keywords' => 'tanzania safari, kilimanjaro trek, serengeti, ngorongoro, arusha day trips, africa safari',
+            'default_og_image' => '/logo/tanzania-safaris-and-trekking-logo.png',
+            'google_tag_manager_id' => '',
+            'google_analytics_id' => '',
         ];
     }
 
@@ -50,14 +56,14 @@ class SiteSettings
             return self::defaults();
         }
 
-        return Cache::rememberForever('site_settings', function (): array {
-            $stored = SiteSetting::query()->pluck('value', 'key')->all();
-
-            return array_merge(self::defaults(), array_map(
+        $stored = Cache::rememberForever('site_settings', function (): array {
+            return array_map(
                 static fn (?string $value): string => (string) ($value ?? ''),
-                $stored
-            ));
+                SiteSetting::query()->pluck('value', 'key')->all()
+            );
         });
+
+        return array_merge(self::defaults(), $stored);
     }
 
     /**

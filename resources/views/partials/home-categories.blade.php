@@ -2,10 +2,10 @@
     @foreach ($vibes as $vibe)
         @php
             $categoryHref = match ($vibe['title']) {
-                'Kilimanjaro Treks' => route('packages.index', ['category' => 'Trekking']),
-                'Day Adventures' => route('packages.index', ['category' => 'Day Trip']),
-                'Cultural Experiences' => route('packages.index', ['category' => 'Cultural']),
-                default => route('packages.index', ['category' => 'Safari']),
+                'Kilimanjaro Treks' => route('packages.trekking'),
+                'Day Adventures' => route('packages.day-trips'),
+                'Cultural Experiences' => route('packages.cultural'),
+                default => route('packages.safari'),
             };
         @endphp
         <div class="col-lg-3 col-md-6 col-sm-12 categories-block">

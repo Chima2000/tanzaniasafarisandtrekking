@@ -59,11 +59,23 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="hero_subtitle">Hero subtitle</label>
-                            <textarea class="form-control" id="hero_subtitle" name="hero_subtitle" rows="3">{{ old('hero_subtitle', $settings['hero_subtitle']) }}</textarea>
+                            @include('admin.partials.rich-text-field', [
+                                'id' => 'hero_subtitle',
+                                'name' => 'hero_subtitle',
+                                'value' => old('hero_subtitle', $settings['hero_subtitle']),
+                                'rows' => 3,
+                                'oldKey' => 'hero_subtitle',
+                            ])
                         </div>
                         <div class="mb-0">
                             <label class="form-label" for="footer_about">Footer about</label>
-                            <textarea class="form-control" id="footer_about" name="footer_about" rows="3">{{ old('footer_about', $settings['footer_about']) }}</textarea>
+                            @include('admin.partials.rich-text-field', [
+                                'id' => 'footer_about',
+                                'name' => 'footer_about',
+                                'value' => old('footer_about', $settings['footer_about']),
+                                'rows' => 3,
+                                'oldKey' => 'footer_about',
+                            ])
                         </div>
                     </div>
                 </div>
@@ -89,6 +101,40 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="whatsapp_url">WhatsApp URL</label>
                                 <input type="url" class="form-control" id="whatsapp_url" name="whatsapp_url" value="{{ old('whatsapp_url', $settings['whatsapp_url']) }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header"><h4 class="card-title mb-0">Default SEO & analytics</h4></div>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="default_meta_title">Default meta title</label>
+                                <input type="text" class="form-control" id="default_meta_title" name="default_meta_title" value="{{ old('default_meta_title', $settings['default_meta_title'] ?? '') }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="default_og_image">Default Open Graph image</label>
+                                <input type="text" class="form-control" id="default_og_image" name="default_og_image" value="{{ old('default_og_image', $settings['default_og_image'] ?? '') }}" placeholder="/logo/...">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label" for="default_meta_description">Default meta description</label>
+                                <textarea class="form-control" id="default_meta_description" name="default_meta_description" rows="3">{{ old('default_meta_description', $settings['default_meta_description'] ?? '') }}</textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label" for="default_meta_keywords">Default meta keywords</label>
+                                <input type="text" class="form-control" id="default_meta_keywords" name="default_meta_keywords" value="{{ old('default_meta_keywords', $settings['default_meta_keywords'] ?? '') }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="google_tag_manager_id">Google Tag Manager ID</label>
+                                <input type="text" class="form-control" id="google_tag_manager_id" name="google_tag_manager_id" value="{{ old('google_tag_manager_id', $settings['google_tag_manager_id'] ?? '') }}" placeholder="GTM-XXXXXXX">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="google_analytics_id">Google Analytics 4 ID</label>
+                                <input type="text" class="form-control" id="google_analytics_id" name="google_analytics_id" value="{{ old('google_analytics_id', $settings['google_analytics_id'] ?? '') }}" placeholder="G-XXXXXXXXXX">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Save settings</button>

@@ -10,12 +10,15 @@
                     $instagramUrl = ($siteSettings['instagram_url'] ?? '') !== '' ? $siteSettings['instagram_url'] : route('home');
                     $phoneHref = 'tel:'.preg_replace('/\s+/', '', $phone);
                 @endphp
-                <p>
-                    <a href="{{ $phoneHref }}" class="header-top-icon-link" aria-label="Call {{ $phone }}">
-                        <img src="/aventour/assets/images/icons/icon-1.png" alt="">
-                        <span class="header-top-text">{{ $phone }}</span>
-                    </a>
-                </p>
+                <div class="header-top-left">
+                    <p>
+                        <a href="{{ $phoneHref }}" class="header-top-icon-link" aria-label="Call {{ $phone }}">
+                            <img src="/aventour/assets/images/icons/icon-1.png" alt="">
+                            <span class="header-top-text">{{ $phone }}</span>
+                        </a>
+                    </p>
+                    @include('partials.aventour.header-search')
+                </div>
                 <div class="right-column">
                     <ul class="info-list">
                         <li>

@@ -1,7 +1,7 @@
 @extends('layouts.aventour')
 
-@section('title', 'Book Now | Tanzania Safaris and Trekking')
-@section('meta_description', 'Book a Tanzania safari, Kilimanjaro climb, or day adventure. Share your group, dates, and places and we will confirm availability.')
+@section('title', $page?->seo_title ?? 'Book Now | Tanzania Safaris and Trekking')
+@section('meta_description', $page?->seo_description ?? 'Book a Tanzania safari, Kilimanjaro climb, or day adventure. Share your group, dates, and places and we will confirm availability.')
 
 @push('styles')
 <link href="/aventour/assets/css/book-now.css?v={{ filemtime(public_path('aventour/assets/css/book-now.css')) }}" rel="stylesheet">
@@ -22,21 +22,24 @@
 @endphp
 
 @include('partials.aventour.page-title', [
-    'title' => 'Book Now',
+    'title' => $pageContent['page_title'] ?? 'Book Now',
     'bg' => $pageBg,
     'crumbs' => [
-        ['label' => 'Book Now'],
+        ['label' => $pageContent['page_title'] ?? 'Book Now'],
     ],
 ])
 
 {{-- 1) Form first — primary action --}}
-<section class="booking-section book-now-section sec-pad">
+<section class="booking-section book-now-section sec-pad" data-cms-section="book-now-main">
     <div class="pattern-layer" style="background-image: url(/aventour/assets/images/shape/shape-1.png);"></div>
     <div class="auto-container">
         <div class="sec-title centred mb_40">
             <div class="sub-title"><i class="flaticon-parachuting"></i><span>Let’s Go!</span></div>
-            <h2>Request Your Safari or Trek</h2>
-            <p class="mt_12">Four short steps — we reply with availability and a draft outline.</p>
+            <h2 data-cms-field="heading">{{ $pageContent['heading'] ?? 'Request Your Safari or Trek' }}</h2>
+            <x-rich-text class="mt_12" data-cms-field="body" :content="$pageContent['body'] ?? null" fallback="Four short steps — we reply with availability and a draft outline." />
+            @if (! empty($pageContent['form_intro']))
+                <x-rich-text class="mt_12" data-cms-field="form_intro" :content="$pageContent['form_intro'] ?? null" />
+            @endif
         </div>
 
         @if ($plannerPackage)

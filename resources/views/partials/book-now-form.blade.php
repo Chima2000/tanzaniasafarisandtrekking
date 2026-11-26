@@ -8,6 +8,7 @@
     novalidate
 >
     @csrf
+    @include('partials.aventour.form-spam-guard')
     <input type="hidden" name="package" value="{{ $plannerPackageSlug }}">
 
     <div class="sec-title mb_25">

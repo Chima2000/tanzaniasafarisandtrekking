@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Support\CatalogSync;
+use App\Support\RichText;
 use App\Support\TourCatalog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -119,11 +120,18 @@ class DestinationController extends Controller
             'headline' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'story_intro' => ['nullable', 'string'],
+            'story_chapters' => ['nullable', 'array'],
+            'story_chapters.*.label' => ['nullable', 'string', 'max:120'],
+            'story_chapters.*.title' => ['nullable', 'string', 'max:255'],
+            'story_chapters.*.body' => ['nullable', 'string'],
+            'story_chapters.*.points_text' => ['nullable', 'string'],
             'highlights_text' => ['nullable', 'string'],
             'wildlife_text' => ['nullable', 'string'],
             'best_time' => ['nullable', 'string'],
             'getting_there' => ['nullable', 'string'],
             'tips_text' => ['nullable', 'string'],
+            'facts_text' => ['nullable', 'string'],
+            'faqs_text' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'max:500'],
             'is_published' => ['sometimes', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
@@ -146,17 +154,112 @@ class DestinationController extends Controller
             'seo_description' => $validated['seo_description'] ?? null,
             'seo_keywords' => $validated['seo_keywords'] ?? null,
             'headline' => $validated['headline'] ?? null,
-            'description' => $validated['description'] ?? null,
-            'story_intro' => $validated['story_intro'] ?? null,
+            'description' => RichText::sanitize($validated['description'] ?? null),
+            'story_intro' => RichText::sanitize($validated['story_intro'] ?? null),
+            'story_chapters' => $this->sanitizeChapters($validated['story_chapters'] ?? []),
             'highlights' => $this->linesToArray($validated['highlights_text'] ?? ''),
             'wildlife' => $this->csvToArray($validated['wildlife_text'] ?? ''),
-            'best_time' => $validated['best_time'] ?? null,
-            'getting_there' => $validated['getting_there'] ?? null,
+            'best_time' => RichText::sanitize($validated['best_time'] ?? null),
+            'getting_there' => RichText::sanitize($validated['getting_there'] ?? null),
             'tips' => $this->linesToArray($validated['tips_text'] ?? ''),
+            'facts' => $this->parseFacts($validated['facts_text'] ?? ''),
+            'faqs' => $this->parseFaqs($validated['faqs_text'] ?? ''),
             'image' => $validated['image'] ?? null,
             'is_published' => $request->boolean('is_published'),
             'sort_order' => (int) ($validated['sort_order'] ?? 0),
         ];
+    }
+
+    /**
+     * @param  array<int, mixed>  $chapters
+     * @return list<array{label: string, title: string, body: string, points: list<string>}>
+     */
+    private function sanitizeChapters(array $chapters): array
+    {
+        $clean = [];
+
+        foreach (array_values($chapters) as $index => $chapter) {
+            if (! is_array($chapter)) {
+                continue;
+            }
+
+            $title = trim((string) ($chapter['title'] ?? ''));
+            $body = RichText::sanitize($chapter['body'] ?? null);
+            $label = trim((string) ($chapter['label'] ?? ''));
+            $points = $this->linesToArray((string) ($chapter['points_text'] ?? ''));
+
+            if ($title === '' && $body === '' && $label === '' && $points === []) {
+                continue;
+            }
+
+            $clean[] = [
+                'label' => $label !== '' ? $label : sprintf('Chapter %02d', $index + 1),
+                'title' => $title,
+                'body' => $body,
+                'points' => $points,
+            ];
+        }
+
+        return $clean;
+    }
+
+    /**
+     * @return list<array{label: string, value: string}>
+     */
+    private function parseFacts(string $value): array
+    {
+        $facts = [];
+
+        foreach ($this->linesToArray($value) as $line) {
+            if (str_contains($line, ':')) {
+                [$label, $factValue] = array_map('trim', explode(':', $line, 2));
+            } else {
+                $label = 'Fact';
+                $factValue = $line;
+            }
+
+            if ($factValue === '') {
+                continue;
+            }
+
+            $facts[] = [
+                'label' => $label !== '' ? $label : 'Fact',
+                'value' => $factValue,
+            ];
+        }
+
+        return $facts;
+    }
+
+    /**
+     * @return list<array{question: string, answer: string}>
+     */
+    private function parseFaqs(string $value): array
+    {
+        $blocks = preg_split("/\n\s*\n/", str_replace(["\r\n", "\r"], "\n", trim($value))) ?: [];
+        $faqs = [];
+
+        foreach ($blocks as $block) {
+            $lines = $this->linesToArray($block);
+
+            if ($lines === []) {
+                continue;
+            }
+
+            $question = array_shift($lines);
+            $answer = RichText::sanitize(implode("\n\n", $lines));
+
+            if ($question === '' || $answer === '') {
+                continue;
+            }
+
+            $faqs[] = [
+                'question' => $question,
+                'answer' => $answer,
+            ];
+        }
+
+        return $faqs;
     }
 
     /**

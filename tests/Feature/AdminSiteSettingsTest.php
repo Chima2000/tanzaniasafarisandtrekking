@@ -6,6 +6,17 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+it('shows the site settings editor including default seo fields', function () {
+    $admin = User::factory()->admin()->create();
+
+    $this->actingAs($admin)
+        ->get(route('admin.settings.edit'))
+        ->assertOk()
+        ->assertSee('Default meta title', false)
+        ->assertSee('name="default_meta_title"', false)
+        ->assertSee('name="default_meta_description"', false);
+});
+
 it('lets an admin update website contact settings used on the public site', function () {
     $admin = User::factory()->admin()->create();
 

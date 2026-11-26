@@ -33,5 +33,6 @@
     <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/auth.js') }}"></script>
     <script src="/aventour/assets/js/ajax-loader.js?v={{ filemtime(public_path('aventour/assets/js/ajax-loader.js')) }}"></script>
+    @include('partials.whatsapp-button')
 </body>
 </html>

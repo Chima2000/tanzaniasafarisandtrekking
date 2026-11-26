@@ -17,6 +17,7 @@
                             <th>Guest</th>
                             <th>Travel date</th>
                             <th>Package</th>
+                            <th>Est. total</th>
                             <th>Status</th>
                             <th>Received</th>
                             <th></th>
@@ -31,6 +32,7 @@
                                 </td>
                                 <td>{{ optional($booking->travel_date)->format('M j, Y') ?? '—' }}</td>
                                 <td>{{ $booking->package_name ?: 'Custom trip' }}</td>
+                                <td>{{ $booking->estimated_total !== null ? '$'.number_format((float) $booking->estimated_total, 0) : '—' }}</td>
                                 <td><span class="badge badge-status-{{ $booking->status }}">{{ ucfirst($booking->status) }}</span></td>
                                 <td>{{ $booking->created_at?->diffForHumans() }}</td>
                                 <td class="text-end">
@@ -39,7 +41,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-muted">No booking requests yet.</td>
+                                <td colspan="7" class="text-muted">No booking requests yet.</td>
                             </tr>
                         @endforelse
                     </tbody>

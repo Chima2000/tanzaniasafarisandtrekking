@@ -33,6 +33,7 @@
                             <tr>
                                 <th>Package</th>
                                 <th>Category</th>
+                                <th>Price / person</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -52,6 +53,7 @@
                                         </div>
                                     </td>
                                     <td>{{ $package->category ?: '—' }}</td>
+                                    <td>{{ $package->formattedPricePerPerson() }}</td>
                                     <td>
                                         @if ($package->is_published)
                                             <span class="badge bg-primary-subtle text-primary">Published</span>
@@ -74,7 +76,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-muted">No packages in the database yet.</td>
+                                    <td colspan="5" class="text-muted">No packages in the database yet.</td>
                                 </tr>
                             @endforelse
                         </tbody>

@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <h4 class="mb-1">Pages</h4>
-                <p class="text-muted mb-0">Edit static website pages such as About, Contact, and FAQs layout copy.</p>
+                <p class="text-muted mb-0">Edit every client page with live preview, image uploads, and image positioning.</p>
             </div>
         </div>
     </div>

@@ -26,6 +26,8 @@ class BookingRequest extends Model
         'destinations',
         'adults',
         'children',
+        'price_per_person',
+        'estimated_total',
         'accommodation',
         'travel_date',
         'notes',
@@ -45,6 +47,8 @@ class BookingRequest extends Model
             'duration_days' => 'integer',
             'adults' => 'integer',
             'children' => 'integer',
+            'price_per_person' => 'float',
+            'estimated_total' => 'float',
         ];
     }
 }

@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\ManagedPageContent;
 use App\Support\TourCatalog;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DestinationController extends Controller
 {
-    public function index(TourCatalog $catalog): View
+    public function index(TourCatalog $catalog, ManagedPageContent $pages): View
     {
         $destinations = $catalog->destinations();
+        $managed = $pages->for('destinations');
 
         return view('destinations.index', [
             'destinations' => $destinations,
-            'pageBg' => $destinations->first()['image']
-                ?? '/aventour/assets/images/background/page-title.jpg',
+            'page' => $managed['page'],
+            'pageContent' => $managed['content'],
+            'pageBg' => $managed['page']?->hero_image
+                ?: ($destinations->first()['image']
+                    ?? '/aventour/assets/images/background/page-title.jpg'),
             'awardBg' => $destinations->get(1)['image']
                 ?? $destinations->first()['image']
                 ?? '/aventour/assets/images/background/award-bg.jpg',

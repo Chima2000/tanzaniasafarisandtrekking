@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 
 class TourCatalog
 {
+    public function __construct(private PackageItineraryCatalog $itineraries) {}
+
     /**
      * @return Collection<int, array{name: string, slug: string, location: string, duration: string, category: string, rating: string, image: string, images: array<int, string>, photo_count: int}>
      */
@@ -330,8 +332,36 @@ class TourCatalog
             ($package['images'] ?? []) !== [] ? $package['images'] : [$package['image'] ?? null]
         )));
 
+        $catalogued = $this->itineraries->for($package);
+
+        if ($catalogued !== null) {
+            $itinerary = [];
+
+            foreach ($catalogued['itinerary'] as $index => $day) {
+                $description = trim((string) ($day['description'] ?? ''));
+                $itinerary[] = [
+                    'day' => $day['day'],
+                    'title' => $day['title'],
+                    'image' => $images[$index] ?? null,
+                    'description' => $description,
+                    'points' => $description !== '' ? [$description] : [],
+                    'meals' => $day['meals'] ?? null,
+                    'destinations' => $day['destinations'] ?? null,
+                ];
+            }
+
+            return $this->withPricing([
+                ...$package,
+                'overview' => $catalogued['overview'],
+                'itinerary' => $itinerary,
+                'gallery' => $images,
+                'includes' => $catalogued['includes'],
+                'excludes' => $catalogued['excludes'],
+            ]);
+        }
+
         if (($package['overview'] ?? '') !== '' && array_key_exists('itinerary', $package)) {
-            return [
+            return $this->withPricing([
                 ...$package,
                 'gallery' => $package['gallery'] ?? $images,
                 'includes' => $package['includes'] ?? $this->includesFor($package),
@@ -341,7 +371,7 @@ class TourCatalog
                     'Travel insurance',
                     'Personal expenses and tips',
                 ],
-            ];
+            ]);
         }
 
         $days = $this->dayCountFor($package['name']);
@@ -349,15 +379,26 @@ class TourCatalog
 
         // Use a unique photo per day without wrapping/repeating earlier shots.
         for ($day = 1; $day <= max($days, 1); $day++) {
+            $points = $this->itineraryPointsFor($package, $day, $days);
+            $description = collect($points)
+                ->filter()
+                ->map(fn (string $point): string => rtrim($point, '.'))
+                ->implode('. ');
+
+            if ($description !== '') {
+                $description .= '.';
+            }
+
             $itinerary[] = [
                 'day' => sprintf('Day %d', $day),
                 'title' => $this->itineraryTitleFor($package, $day, $days),
                 'image' => $images[$day - 1] ?? null,
-                'points' => $this->itineraryPointsFor($package, $day, $days),
+                'description' => $description,
+                'points' => $points,
             ];
         }
 
-        return [
+        return $this->withPricing([
             ...$package,
             'overview' => $this->overviewFor($package),
             'itinerary' => $itinerary,
@@ -369,6 +410,31 @@ class TourCatalog
                 'Travel insurance',
                 'Personal expenses and tips',
             ],
+        ]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $package
+     * @return array<string, mixed>
+     */
+    private function withPricing(array $package): array
+    {
+        $defaults = PackagePricing::defaultsFor($package);
+        $cost = array_key_exists('cost_per_person', $package) && $package['cost_per_person'] !== null
+            ? (float) $package['cost_per_person']
+            : $defaults['cost_per_person'];
+        $profit = array_key_exists('profit_per_person', $package) && $package['profit_per_person'] !== null
+            ? (float) $package['profit_per_person']
+            : $defaults['profit_per_person'];
+        $price = PackagePricing::sellingPrice($cost, $profit);
+
+        return [
+            ...$package,
+            'cost_per_person' => $cost,
+            'profit_per_person' => $profit,
+            'price_per_person' => $price,
+            'price_label' => PackagePricing::formatUsd($price),
+            'blocked_dates' => array_values(array_filter((array) ($package['blocked_dates'] ?? []))),
         ];
     }
 
@@ -910,383 +976,7 @@ class TourCatalog
 
     private function destinationDefinitions(): array
     {
-        return [
-            [
-                'short' => 'Se',
-                'title' => 'Serengeti',
-                'full_name' => 'Serengeti National Park',
-                'region' => 'Northern Tanzania',
-                'slug' => 'serengeti',
-                'needles' => ['Serengeti'],
-                'starts' => 'From 4 Days',
-                'seo_title' => 'Serengeti National Park Safari Tours | Tanzania Safaris and Trekking',
-                'seo_description' => 'Explore Serengeti National Park safaris with Great Migration wildebeest crossings, Big Five game drives, and private Tanzania itineraries led by local guides.',
-                'seo_keywords' => 'Serengeti safari, Serengeti National Park, Great Migration, Big Five Tanzania, wildebeest migration safari',
-                'headline' => 'Where the Plains Tell Their Own Story',
-                'description' => 'Endless plains, big cat drama, and the legendary Great Migration across Tanzania’s most iconic national park.',
-                'story_intro' => 'In the Serengeti, every sunrise opens a new chapter. Lions patrol golden grass, elephants move like quiet mountains, and millions of wildebeest rewrite the landscape as seasons turn. This is Northern Tanzania’s signature wildlife stage—vast, cinematic, and unforgettable.',
-                'story_chapters' => [
-                    [
-                        'label' => 'Chapter 01',
-                        'title' => 'Arrival on the Endless Plains',
-                        'body' => 'Your Serengeti story begins as the bush road opens into open grassland. Acacias stand like punctuation marks across the horizon while your guide reads tracks, bird calls, and weather for the day’s first sightings.',
-                        'points' => ['Scenic transfer into the park', 'Afternoon game drive orientation', 'Sunset light over the savannah'],
-                    ],
-                    [
-                        'label' => 'Chapter 02',
-                        'title' => 'The Great Migration Unfolds',
-                        'body' => 'Depending on the month, herds gather, calve, move, or brave river crossings. Following the migration is less about a single viewpoint and more about timing, patience, and being present when the plains come alive.',
-                        'points' => ['Seasonal herd movements', 'Predator-prey drama', 'Best viewing windows with local insight'],
-                    ],
-                    [
-                        'label' => 'Chapter 03',
-                        'title' => 'Big Cat Country After Dark Stories',
-                        'body' => 'Serengeti is famous for lions, cheetahs on kopjes, and leopard sightings in riverine woodland. Quiet game drives reward travelers who linger, listen, and let the bush set the pace.',
-                        'points' => ['Lion prides and hunting behavior', 'Cheetahs on open flats', 'Leopard habitat along drainage lines'],
-                    ],
-                    [
-                        'label' => 'Chapter 04',
-                        'title' => 'Evenings Under a Safari Sky',
-                        'body' => 'Campfire conversations, star-filled nights, and the distant call of hyena close each day. From mobile camps to lodge comfort, Serengeti nights keep the wilderness close without losing warmth and welcome.',
-                        'points' => ['Lodge or camping options', 'Guided storytelling around wildlife', 'Rest before the next dawn drive'],
-                    ],
-                ],
-                'highlights' => [
-                    'UNESCO-listed Serengeti ecosystem',
-                    'Great Migration and river crossings in season',
-                    'Excellent Big Five and big-cat viewing',
-                    'Open plains ideal for photography',
-                ],
-                'wildlife' => ['Lion', 'Leopard', 'Cheetah', 'Elephant', 'Buffalo', 'Wildebeest', 'Zebra', 'Giraffe', 'Hippo', 'Crocodile'],
-                'best_time' => 'June to October for dry-season clarity and classic predator viewing; December to March for southern calving grounds; July to October for western/northern river-crossing drama.',
-                'getting_there' => 'Most travelers fly into Kilimanjaro International (JRO) or Arusha, then continue by safari vehicle or scheduled/light aircraft into Serengeti airstrips depending on itinerary.',
-                'tips' => [
-                    'Plan at least 3–4 nights in Serengeti for meaningful wildlife time.',
-                    'Match camp location to migration season when possible.',
-                    'Bring binoculars, neutral clothing, and dust protection for cameras.',
-                ],
-                'facts' => [
-                    ['label' => 'Park Status', 'value' => 'UNESCO World Heritage'],
-                    ['label' => 'Best For', 'value' => 'Migration & Big Cats'],
-                    ['label' => 'Typical Stay', 'value' => '3–5 Nights'],
-                    ['label' => 'Safari Style', 'value' => 'Game Drives'],
-                ],
-                'faqs' => [
-                    [
-                        'question' => 'When is the best time for a Serengeti safari?',
-                        'answer' => 'Dry months from June to October are excellent overall. For calving, aim for southern Serengeti around December to March. For dramatic river crossings, focus on the western and northern corridors roughly July to October.',
-                    ],
-                    [
-                        'question' => 'Can I combine Serengeti with Ngorongoro and Tarangire?',
-                        'answer' => 'Yes. Most Northern Circuit itineraries pair Serengeti with Tarangire and Ngorongoro for contrasting habitats and stronger wildlife variety.',
-                    ],
-                    [
-                        'question' => 'Is Serengeti suitable for first-time safari travelers?',
-                        'answer' => 'Absolutely. Clear sightlines, high wildlife density, and experienced local guides make Serengeti one of the best introductions to African safari.',
-                    ],
-                ],
-            ],
-            [
-                'short' => 'Ng',
-                'title' => 'Ngorongoro',
-                'full_name' => 'Ngorongoro Conservation Area',
-                'region' => 'Northern Tanzania',
-                'slug' => 'ngorongoro',
-                'needles' => ['Ngorongoro'],
-                'starts' => 'From 1 Day',
-                'seo_title' => 'Ngorongoro Crater Safari | Tanzania Safaris and Trekking',
-                'seo_description' => 'Discover Ngorongoro Crater safaris in a UNESCO conservation area—dense wildlife, Maasai culture, and dramatic caldera views on day trips or multi-day Tanzania itineraries.',
-                'seo_keywords' => 'Ngorongoro Crater safari, Ngorongoro Conservation Area, UNESCO Tanzania safari, Maasai culture tour',
-                'headline' => 'A Caldera Where Wildlife Gathers Close',
-                'description' => 'A UNESCO crater sanctuary packed with wildlife, Maasai culture, and one of Africa’s most dramatic viewpoints.',
-                'story_intro' => 'Descend the rim of Ngorongoro and the world narrows into a natural amphitheater. Lakes glitter below, forests cling to the walls, and wildlife concentrates in a living bowl unlike anywhere else on the Northern Circuit.',
-                'story_chapters' => [
-                    [
-                        'label' => 'Chapter 01',
-                        'title' => 'Standing on the Crater Rim',
-                        'body' => 'Cloud and light shift across the caldera as you arrive. From the rim, the floor looks quiet—until your guide points out elephant trails, flamingo color on the lake, and the distant dust of buffalo herds.',
-                        'points' => ['Rim viewpoints and orientation', 'Conservation area context', 'Photo stops before descent'],
-                    ],
-                    [
-                        'label' => 'Chapter 02',
-                        'title' => 'Game Drive Inside the Bowl',
-                        'body' => 'On the crater floor, habitats compress: grassland, swamp, forest edge, and soda lake. Sightings can come quickly—black rhino possibilities, lion prides, hippos, and dense herds in one compact landscape.',
-                        'points' => ['High wildlife density', 'Rhino and big mammal chances', 'Guided crater circuit'],
-                    ],
-                    [
-                        'label' => 'Chapter 03',
-                        'title' => 'Maasai Stories Beyond the View',
-                        'body' => 'Ngorongoro is a conservation area where people and wildlife share space. Cultural encounters, when arranged respectfully, add human texture to the crater’s natural drama.',
-                        'points' => ['Optional cultural visits', 'Community context', 'Responsible travel etiquette'],
-                    ],
-                    [
-                        'label' => 'Chapter 04',
-                        'title' => 'From Day Trip to Overnight Rim Stays',
-                        'body' => 'Some travelers visit Ngorongoro as a powerful day safari; others overnight on the rim for sunrise and a fuller crater experience before continuing to Serengeti or Tarangire.',
-                        'points' => ['Flexible 1-day or multi-day plans', 'Rim lodge atmosphere', 'Easy Northern Circuit links'],
-                    ],
-                ],
-                'highlights' => [
-                    'UNESCO World Heritage crater landscape',
-                    'Exceptional wildlife concentration',
-                    'Scenic rim viewpoints',
-                    'Cultural depth with Maasai communities',
-                ],
-                'wildlife' => ['Lion', 'Elephant', 'Buffalo', 'Black rhino', 'Hippo', 'Flamingo', 'Hyena', 'Wildebeest', 'Zebra'],
-                'best_time' => 'Year-round destination. Dry months (June–October) offer easier crater-floor driving; green season brings lush scenery and fewer vehicles on some days.',
-                'getting_there' => 'About a half-day drive from Arusha via the Conservation Area gate. Often combined with Tarangire inbound and Serengeti outbound on classic safari circuits.',
-                'tips' => [
-                    'Start early for crater descent timing and cooler wildlife activity.',
-                    'Pack a warm layer—rim mornings can be chilly.',
-                    'Ask about picnic rules and crater stay limits for your permit day.',
-                ],
-                'facts' => [
-                    ['label' => 'Status', 'value' => 'UNESCO Conservation Area'],
-                    ['label' => 'Best For', 'value' => 'Crater Wildlife'],
-                    ['label' => 'Typical Visit', 'value' => '1–2 Days'],
-                    ['label' => 'Highlight', 'value' => 'Caldera Game Drive'],
-                ],
-                'faqs' => [
-                    [
-                        'question' => 'Is one day enough for Ngorongoro Crater?',
-                        'answer' => 'A full day crater game drive is rewarding. Overnighting on the rim adds sunrise atmosphere and softer pacing, especially if combined with Serengeti.',
-                    ],
-                    [
-                        'question' => 'What makes Ngorongoro different from Serengeti?',
-                        'answer' => 'Ngorongoro concentrates wildlife inside a collapsed volcanic caldera, creating intimate viewing. Serengeti offers vast open plains and seasonal migration movement across a much larger ecosystem.',
-                    ],
-                    [
-                        'question' => 'Can families visit Ngorongoro?',
-                        'answer' => 'Yes, with age and vehicle guidelines for crater access. We tailor pacing, picnic stops, and route choices for comfortable family safaris.',
-                    ],
-                ],
-            ],
-            [
-                'short' => 'Ki',
-                'title' => 'Kilimanjaro',
-                'full_name' => 'Mount Kilimanjaro',
-                'region' => 'Kilimanjaro Region, Tanzania',
-                'slug' => 'kilimanjaro',
-                'needles' => ['Kilimanjaro'],
-                'starts' => 'From 5 Days',
-                'seo_title' => 'Kilimanjaro Trekking Tours & Climb Routes | Tanzania Safaris and Trekking',
-                'seo_description' => 'Climb Mount Kilimanjaro with guided treks on Machame, Marangu, Lemosho, Rongai, Umbwe, and Northern Circuit routes—paced for safety, acclimatization, and summit success.',
-                'seo_keywords' => 'Kilimanjaro trek, climb Mount Kilimanjaro, Machame route, Lemosho route, Marangu route, Kilimanjaro guide',
-                'headline' => 'Africa’s Roof, One Careful Step at a Time',
-                'description' => 'Africa’s highest peak—guided treks on classic routes with experienced mountain crews and carefully paced itineraries.',
-                'story_intro' => 'Kilimanjaro is not conquered in a rush. It is earned through forest mist, alpine desert silence, and a midnight summit push under cold stars. With the right route, crew, and pacing, the mountain becomes a powerful personal story—not just a peak on a map.',
-                'story_chapters' => [
-                    [
-                        'label' => 'Chapter 01',
-                        'title' => 'Choosing Your Route Story',
-                        'body' => 'Machame’s scenic ridges, Marangu’s hut comfort, Lemosho’s quieter western approach, Rongai’s drier north side, Umbwe’s steep challenge, and the longer Northern Circuit each tell a different ascent narrative.',
-                        'points' => ['Route matching to fitness and time', 'Acclimatization profile', 'Hut vs camping style'],
-                    ],
-                    [
-                        'label' => 'Chapter 02',
-                        'title' => 'Through Forest Into Moorland',
-                        'body' => 'Early days move from rainforest birdsong into heather and lobelia landscapes. Guides keep a polite “pole pole” rhythm while your body learns altitude and your eyes adjust to changing ecosystems.',
-                        'points' => ['Gradual elevation gain', 'Crew support and hot meals', 'Daily health monitoring'],
-                    ],
-                    [
-                        'label' => 'Chapter 03',
-                        'title' => 'Alpine Desert and High Camp',
-                        'body' => 'The mountain grows stark and lunar. Rest, hydration, and honest communication matter most as you prepare for the summit bid from high camp.',
-                        'points' => ['Layered clothing strategy', 'Sleep and recovery focus', 'Weather-aware timing'],
-                    ],
-                    [
-                        'label' => 'Chapter 04',
-                        'title' => 'Summit Dawn and Safe Descent',
-                        'body' => 'Uhuru Peak at sunrise is the emotional crest—then the story turns toward careful descent, celebration, and the long walk back to green hills and warm beds.',
-                        'points' => ['Guided summit push', 'Glacier and crater views', 'Supported descent and debrief'],
-                    ],
-                ],
-                'highlights' => [
-                    'Highest free-standing mountain on Earth (5,895 m)',
-                    'Multiple route options for different experience levels',
-                    'Professional guides, cooks, and porter teams',
-                    'Combine with Northern Circuit safari after the trek',
-                ],
-                'wildlife' => ['Colobus monkeys (lower forest)', 'Birdlife on trail approaches', 'Unique alpine flora zones'],
-                'best_time' => 'Primary windows are January–March and June–October for more stable climbing weather. Shoulder months can work with flexible planning.',
-                'getting_there' => 'Fly into Kilimanjaro International Airport (JRO). Most climbs start from Moshi or Arusha with gear checks and briefings before gate transfer.',
-                'tips' => [
-                    'Favor longer routes (7–9 days) for better acclimatization odds.',
-                    'Train with loaded day hikes before arrival.',
-                    'Invest in broken-in boots, quality layers, and a reliable sleeping system.',
-                ],
-                'facts' => [
-                    ['label' => 'Summit', 'value' => 'Uhuru Peak 5,895 m'],
-                    ['label' => 'Best For', 'value' => 'Guided Trekking'],
-                    ['label' => 'Typical Duration', 'value' => '5–9 Days'],
-                    ['label' => 'Style', 'value' => 'Camping or Huts'],
-                ],
-                'faqs' => [
-                    [
-                        'question' => 'Which Kilimanjaro route is best for beginners?',
-                        'answer' => 'Machame and Lemosho are popular scenic choices with strong acclimatization profiles when given enough days. Marangu offers hut stays and a familiar out-and-back path.',
-                    ],
-                    [
-                        'question' => 'Do I need technical climbing skills?',
-                        'answer' => 'No technical mountaineering is required on standard routes, but strong fitness, mental stamina, and respect for altitude are essential.',
-                    ],
-                    [
-                        'question' => 'Can I add a safari after Kilimanjaro?',
-                        'answer' => 'Yes. Many travelers recover with a short rest, then continue to Tarangire, Ngorongoro, and Serengeti for a complete Tanzania journey.',
-                    ],
-                ],
-            ],
-            [
-                'short' => 'Ta',
-                'title' => 'Tarangire',
-                'full_name' => 'Tarangire National Park',
-                'region' => 'Northern Tanzania',
-                'slug' => 'tarangire',
-                'needles' => ['Tarangire'],
-                'starts' => 'From 1 Day',
-                'seo_title' => 'Tarangire National Park Safari | Elephants & Baobabs in Tanzania',
-                'seo_description' => 'Visit Tarangire National Park for elephant herds, baobab landscapes, and quieter Northern Circuit game drives—ideal as a day safari or the opening chapter of a longer Tanzania trip.',
-                'seo_keywords' => 'Tarangire safari, Tarangire National Park, elephant safari Tanzania, baobab safari, day safari from Arusha',
-                'headline' => 'Baobabs, Elephants, and Soft Morning Light',
-                'description' => 'Baobab landscapes, elephant herds, and quiet safari trails just a short drive from Arusha.',
-                'story_intro' => 'Tarangire feels intimate compared with Serengeti’s scale. Ancient baobabs rise from dry earth, the river draws wildlife in the dry season, and elephant families write the day’s plot in dust and water.',
-                'story_chapters' => [
-                    [
-                        'label' => 'Chapter 01',
-                        'title' => 'A Short Road Into Big Wilderness',
-                        'body' => 'From Arusha, Tarangire is an easy first safari chapter. Within hours you can be watching zebra, giraffe, and the first silhouettes of elephants against baobab trunks.',
-                        'points' => ['Convenient day-safari access', 'Strong first-game-drive energy', 'Scenic baobab photography'],
-                    ],
-                    [
-                        'label' => 'Chapter 02',
-                        'title' => 'Elephant Country by the River',
-                        'body' => 'In the dry months, Tarangire’s river system becomes a wildlife magnet. Large elephant gatherings, predators nearby, and birdlife along water create layered sightings in a compact park.',
-                        'points' => ['Famous elephant concentrations', 'Riverine game viewing', 'Birdwatching opportunities'],
-                    ],
-                    [
-                        'label' => 'Chapter 03',
-                        'title' => 'Quiet Trails Between Iconic Parks',
-                        'body' => 'Tarangire often opens multi-day circuits before Manyara viewpoints, Ngorongoro, and Serengeti. It adds texture—dry-country giants and tree-studded horizons—before the crater and plains.',
-                        'points' => ['Ideal circuit opener', 'Contrasting habitats', 'Flexible 1–3 night stays'],
-                    ],
-                    [
-                        'label' => 'Chapter 04',
-                        'title' => 'Golden Hour Among the Giants',
-                        'body' => 'Late light turns baobabs copper and elephants into moving sculpture. Whether you stay for a day or longer, Tarangire rewards unhurried loops and patient guides.',
-                        'points' => ['Sunset game drives', 'Picnic or lodge lunches', 'Easy pairing with crater safaris'],
-                    ],
-                ],
-                'highlights' => [
-                    'Iconic baobab scenery',
-                    'Outstanding dry-season elephant viewing',
-                    'Excellent add-on to Ngorongoro and Serengeti',
-                    'Great value day safari from Arusha',
-                ],
-                'wildlife' => ['Elephant', 'Lion', 'Leopard', 'Buffalo', 'Giraffe', 'Zebra', 'Wildebeest', 'Python', 'Diverse birdlife'],
-                'best_time' => 'June to October is peak for river-focused wildlife density. Green season still offers beauty, birds, and fewer crowds.',
-                'getting_there' => 'Roughly a 2-hour drive from Arusha, making Tarangire one of the most accessible national parks on the Northern Circuit.',
-                'tips' => [
-                    'Ideal as day one of a camping or lodge safari circuit.',
-                    'Carry binoculars for distant elephant herds and birdlife.',
-                    'Combine with Ngorongoro the following day for contrast.',
-                ],
-                'facts' => [
-                    ['label' => 'Access', 'value' => 'Near Arusha'],
-                    ['label' => 'Best For', 'value' => 'Elephants & Baobabs'],
-                    ['label' => 'Typical Visit', 'value' => '1–2 Days'],
-                    ['label' => 'Circuit Role', 'value' => 'Safari Opener'],
-                ],
-                'faqs' => [
-                    [
-                        'question' => 'Is Tarangire worth it as a day trip?',
-                        'answer' => 'Yes. It is one of the strongest day safaris from Arusha, especially in the dry season when elephants concentrate near water.',
-                    ],
-                    [
-                        'question' => 'How does Tarangire compare with Serengeti?',
-                        'answer' => 'Tarangire is smaller and often quieter, with signature baobabs and elephant herds. Serengeti is vastly larger with migration spectacle and expansive plains.',
-                    ],
-                    [
-                        'question' => 'Should Tarangire come before Ngorongoro?',
-                        'answer' => 'Many classic itineraries start in Tarangire, continue to Serengeti, and finish with Ngorongoro—an efficient loop with varied landscapes.',
-                    ],
-                ],
-            ],
-            [
-                'short' => 'Ar',
-                'title' => 'Arusha',
-                'full_name' => 'Arusha & Nearby Day Adventures',
-                'region' => 'Northern Tanzania Gateway',
-                'slug' => 'arusha',
-                'needles' => ['Arusha', 'Materuni', 'Kikuletwa', 'Chemka'],
-                'starts' => 'Day Safari',
-                'seo_title' => 'Arusha Day Safaris & Cultural Tours | Tanzania Trip Gateway',
-                'seo_description' => 'Use Arusha as your Tanzania safari gateway—Arusha National Park day safaris, Materuni waterfalls and coffee tours, Chemka hot springs, and smooth links to Tarangire and Ngorongoro.',
-                'seo_keywords' => 'Arusha National Park, Arusha day safari, Materuni waterfalls, Chemka hot springs, Tanzania safari gateway',
-                'headline' => 'The Gateway Where Tanzania Trips Begin',
-                'description' => 'Gateway to the Northern Circuit—day trips, cultural visits, and easy links into Tarangire and Ngorongoro.',
-                'story_intro' => 'Arusha is more than a transit city. It is the first page of many Tanzania stories: coffee-scented hills, a national park beneath Meru’s silhouette, waterfall spray at Materuni, and warm springs at Chemka before the bigger parks call you north and west.',
-                'story_chapters' => [
-                    [
-                        'label' => 'Chapter 01',
-                        'title' => 'Touchdown and Soft Landing',
-                        'body' => 'After landing at Kilimanjaro International or arriving overland, Arusha offers rest, gear checks, briefings, and the first taste of Northern Tanzania hospitality before your main safari or trek begins.',
-                        'points' => ['Airport meet-and-greet options', 'Pre-trek or pre-safari briefing', 'Comfortable overnight staging'],
-                    ],
-                    [
-                        'label' => 'Chapter 02',
-                        'title' => 'Arusha National Park Day Safari',
-                        'body' => 'A compact park with giraffes on open glades, colobus in forest, crater lakes, and views toward Mount Meru. Perfect when you want wildlife without a long transfer.',
-                        'points' => ['Half-day or full-day game viewing', 'Forest and lake habitats', 'Ideal arrival or buffer day'],
-                    ],
-                    [
-                        'label' => 'Chapter 03',
-                        'title' => 'Materuni Waterfalls and Coffee Culture',
-                        'body' => 'In the Moshi foothills, village paths lead to waterfall swim spots and hands-on coffee experiences—an engaging cultural counterpoint to park game drives.',
-                        'points' => ['Waterfall hike and swim', 'Coffee tour storytelling', 'Local Chagga hospitality'],
-                    ],
-                    [
-                        'label' => 'Chapter 04',
-                        'title' => 'Chemka Hot Springs and Onward Adventures',
-                        'body' => 'Clear spring pools at Kikuletwa (Chemka) make a refreshing day trip. From Arusha you can then launch into Tarangire, Ngorongoro, Serengeti, or Kilimanjaro with logistics already aligned.',
-                        'points' => ['Hot springs swim stop', 'Flexible add-on days', 'Seamless Northern Circuit departures'],
-                    ],
-                ],
-                'highlights' => [
-                    'Primary Northern Circuit launch point',
-                    'Arusha National Park wildlife day trips',
-                    'Materuni waterfalls and coffee experiences',
-                    'Chemka / Kikuletwa hot springs escapes',
-                ],
-                'wildlife' => ['Giraffe', 'Buffalo', 'Colobus monkey', 'Flamingo (seasonal lakes)', 'Bushbuck', 'Rich birdlife'],
-                'best_time' => 'Year-round for day trips. Dry months favor clearer mountain views; green season deepens waterfall flow and coffee-country scenery.',
-                'getting_there' => 'Kilimanjaro International Airport (JRO) is the main arrival gateway, with road transfer to Arusha or Moshi depending on your plan.',
-                'tips' => [
-                    'Add a buffer day before Kilimanjaro for rest and briefing.',
-                    'Use Arusha National Park when flight timing blocks a longer park day.',
-                    'Combine Materuni and coffee culture for an active non-park day.',
-                ],
-                'facts' => [
-                    ['label' => 'Role', 'value' => 'Safari & Trek Gateway'],
-                    ['label' => 'Best For', 'value' => 'Day Trips & Staging'],
-                    ['label' => 'Nearby Peak', 'value' => 'Mount Meru Views'],
-                    ['label' => 'Add-Ons', 'value' => 'Waterfalls & Springs'],
-                ],
-                'faqs' => [
-                    [
-                        'question' => 'Should I stay in Arusha before my safari?',
-                        'answer' => 'Yes for most itineraries. An arrival night helps with rest, briefing, and an optional day trip before heading to Tarangire or the crater.',
-                    ],
-                    [
-                        'question' => 'What day trips are best from Arusha?',
-                        'answer' => 'Arusha National Park for wildlife, Materuni for waterfalls and coffee culture, and Chemka hot springs for a relaxed swim day are top choices.',
-                    ],
-                    [
-                        'question' => 'Is Arusha close to Kilimanjaro climbs?',
-                        'answer' => 'Climbs often stage from Moshi or Arusha. We arrange transfers, gear checks, and route briefings based on your chosen Kilimanjaro itinerary.',
-                    ],
-                ],
-            ],
-        ];
+        return app(DestinationDefinitions::class)->all();
     }
 
     /**
@@ -1380,9 +1070,9 @@ class TourCatalog
                 ],
                 'tags' => ['Kilimanjaro', 'Trekking', 'Routes'],
                 'cta_label' => 'Browse Kilimanjaro Treks',
-                'cta_url_name' => 'packages.index',
+                'cta_url_name' => 'packages.trekking',
                 'cta_url_param' => null,
-                'cta_query' => ['category' => 'Trekking'],
+                'cta_query' => null,
             ],
             [
                 'slug' => 'ngorongoro-crater-one-day-what-to-expect',
@@ -1557,9 +1247,9 @@ class TourCatalog
                 ],
                 'tags' => ['Planning', 'Northern Circuit', 'Safari'],
                 'cta_label' => 'Browse Safari Packages',
-                'cta_url_name' => 'packages.index',
+                'cta_url_name' => 'packages.safari',
                 'cta_url_param' => null,
-                'cta_query' => ['category' => 'Safari'],
+                'cta_query' => null,
             ],
         ];
     }

@@ -99,9 +99,17 @@
     background-color: #F8FAFC !important;
 }
 
+/* Keep the fixed sidebar within the viewport and scroll the menu region. */
+.startbar {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .startbar .brand {
     background: #1E293B;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     min-height: var(--bs-topbar-height);
@@ -178,13 +186,72 @@ body[data-sidebar-size=collapsed] .startbar .brand .logo .logo-sm {
     object-position: center;
 }
 
+.startbar .startbar-menu {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    height: auto;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
 .startbar .startbar-menu .startbar-collapse {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
+    max-height: none;
     padding-top: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.startbar .startbar-menu .startbar-collapse .simplebar-wrapper {
+    height: 100%;
+}
+
+.startbar .startbar-menu .navbar-nav .menu-label {
+    padding: 1.15rem 0.35rem 0.35rem 0.75rem;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #94a3b8;
 }
 
 .startbar .startbar-menu .navbar-nav > .menu-label:first-child {
-    padding-top: 1rem !important;
+    padding-top: 0.35rem !important;
     margin-top: 0 !important;
+}
+
+.startbar .startbar-menu .navbar-nav .menu-label .label-border {
+    display: none;
+}
+
+body[data-sidebar-size=collapsed] .startbar:not(:hover) .startbar-menu .navbar-nav > .menu-label:first-child {
+    display: none;
+}
+
+body[data-sidebar-size=collapsed] .startbar:not(:hover) .startbar-menu .navbar-nav .menu-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    margin: 4px 0 0;
+    padding: 0 !important;
+}
+
+body[data-sidebar-size=collapsed] .startbar:not(:hover) .startbar-menu .navbar-nav .menu-label .label-border {
+    display: block;
+    width: 22px;
+    height: 1px;
+    margin: 0;
+    background: rgba(30, 41, 59, 0.16);
+}
+
+body[data-sidebar-size=collapsed] .startbar:not(:hover) .startbar-menu .navbar-nav .menu-label .label-border .border_left,
+body[data-sidebar-size=collapsed] .startbar:not(:hover) .startbar-menu .navbar-nav .menu-label .label-border .border_right {
+    display: none;
 }
 
 .startbar .startbar-menu .navbar-nav .nav-item .nav-link:hover,
