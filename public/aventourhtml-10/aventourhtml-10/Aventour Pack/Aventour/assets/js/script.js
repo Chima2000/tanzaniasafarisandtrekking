@@ -512,6 +512,51 @@
             });
         };
 
+        const measureVisibleReviewHeight = (carouselEl) => {
+            const track = carouselEl.getBoundingClientRect();
+            const slides = [...carouselEl.querySelectorAll('.swiper-slide')];
+            let maxHeight = 0;
+
+            slides.forEach((slide) => {
+                const rect = slide.getBoundingClientRect();
+                const isVisible = rect.right > track.left + 4 && rect.left < track.right - 4;
+                if (!isVisible) {
+                    return;
+                }
+
+                const card = slide.querySelector('.platform-review-card');
+                const target = card || slide;
+                const height = Math.ceil(Math.max(target.scrollHeight, target.getBoundingClientRect().height));
+                if (height > maxHeight) {
+                    maxHeight = height;
+                }
+            });
+
+            return maxHeight;
+        };
+
+        const refreshReviewCarousel = (key) => {
+            const carousel = reviewCarousels[key];
+            if (!carousel) {
+                return;
+            }
+
+            const applyHeight = () => {
+                carousel.update();
+                const nextHeight = measureVisibleReviewHeight(carousel.el);
+                if (nextHeight > 0) {
+                    carousel.el.style.height = `${nextHeight}px`;
+                    if (carousel.wrapperEl) {
+                        carousel.wrapperEl.style.height = `${nextHeight}px`;
+                    }
+                }
+            };
+
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(applyHeight);
+            });
+        };
+
         $('[data-reviews-carousel]').each(function () {
             const key = this.getAttribute('data-reviews-carousel');
             reviewCarousels[key] = new Swiper(this, {
@@ -521,7 +566,9 @@
                 grabCursor: true,
                 watchOverflow: true,
                 loop: false,
-                autoHeight: true,
+                autoHeight: false,
+                observer: true,
+                observeParents: true,
                 pagination: {
                     el: `[data-reviews-pagination="${key}"]`,
                     clickable: true,
@@ -532,35 +579,29 @@
                 },
                 breakpoints: {
                     575: {
-                        slidesPerView: 1.15,
+                        slidesPerView: 1.08,
                         spaceBetween: 16,
-                        autoHeight: true,
                     },
                     768: {
                         slidesPerView: 2,
                         spaceBetween: 18,
-                        autoHeight: false,
                     },
                     1200: {
                         slidesPerView: 3,
                         spaceBetween: 20,
-                        autoHeight: false,
                     },
                 },
                 on: {
                     init() {
                         initReviewToggleButtons(this.el);
-                        window.requestAnimationFrame(() => {
-                            this.updateAutoHeight(0);
-                            this.update();
-                        });
+                        refreshReviewCarousel(key);
                     },
                     resize() {
                         initReviewToggleButtons(this.el);
-                        this.updateAutoHeight(0);
+                        refreshReviewCarousel(key);
                     },
                     slideChangeTransitionEnd() {
-                        this.updateAutoHeight(0);
+                        refreshReviewCarousel(key);
                     },
                 },
             });
@@ -577,8 +618,8 @@
 
             const carouselEl = card.closest('[data-reviews-carousel]');
             const key = carouselEl?.getAttribute('data-reviews-carousel');
-            if (key && reviewCarousels[key]) {
-                reviewCarousels[key].updateAutoHeight(200);
+            if (key) {
+                refreshReviewCarousel(key);
             }
         });
 
@@ -602,8 +643,8 @@
             });
 
             if (reviewCarousels[tabKey]) {
-                reviewCarousels[tabKey].update();
                 initReviewToggleButtons(reviewCarousels[tabKey].el);
+                refreshReviewCarousel(tabKey);
             }
         });
 	}

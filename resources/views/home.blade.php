@@ -506,59 +506,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <!-- chooseus-section -->
         <section class="chooseus-section sec-pad-2 bg-color-1" data-cms-section="chooseus">
-            <div class="bg-image">
+            <div class="bg-image" aria-hidden="true">
                 <div class="bg-shape-1" style="background-image: url(/aventour/assets/images/shape/shape-9.png);"></div>
                 <div class="bg-shape-2 float-bob-x" style="background-image: url(/aventour/assets/images/shape/shape-10.png);"></div>
                 <div class="bg-image-1" data-cms-field="chooseus_bg" style="{{ \App\Support\CmsMedia::backgroundStyle($chooseusBg, $c['chooseus_bg_position'] ?? null) }}"></div>
             </div>
             <div class="auto-container">
-                <div class="sec-title">
+                <div class="sec-title centred">
                     <div class="sub-title"><i class="flaticon-parachuting"></i><span data-cms-field="chooseus_subtitle">{{ $c['chooseus_subtitle'] ?? 'Why Tanzania Safaris and Trekking' }}</span></div>
                     <h2 data-cms-field="chooseus_heading">{{ $c['chooseus_heading'] ?? 'Your Trusted Travel Partner' }}</h2>
                     <x-rich-text class="mt_12" data-cms-field="chooseus_body" :content="$c['chooseus_body'] ?? null" fallback="Guiding you to unforgettable experiences across the world’s wonders." />
                 </div>
-                <div class="row clearfix">
-                    <div class="col-xl-9 col-lg-12 big-column">
-                        <div class="row clearfix">
-                            <div class="col-lg-4 col-md-6 col-sm-12 chooseus-block">
-                                <div class="chooseus-block-one">
-                                    <div class="icon-box"><img src="/aventour/assets/images/icons/icon-9.png" alt=""></div>
-                                    <h3><a href="{{ url('/') }}" data-cms-field="chooseus_item_1_title">{{ $c['chooseus_item_1_title'] ?? 'Curated Tours' }}</a></h3>
-                                    <x-rich-text data-cms-field="chooseus_item_1_body" :content="$c['chooseus_item_1_body'] ?? null" fallback="Only the best destinations and experiences, selected just for you." />
+                <div class="chooseus-grid">
+                    <div class="chooseus-block">
+                        <div class="chooseus-block-one">
+                            <div class="icon-box"><img src="/aventour/assets/images/icons/icon-9.png" alt=""></div>
+                            <h3><a href="{{ url('/') }}" data-cms-field="chooseus_item_1_title">{{ $c['chooseus_item_1_title'] ?? 'Curated Tours' }}</a></h3>
+                            <x-rich-text data-cms-field="chooseus_item_1_body" :content="$c['chooseus_item_1_body'] ?? null" fallback="Only the best destinations and experiences, selected just for you." />
+                        </div>
+                    </div>
+                    <div class="chooseus-block">
+                        <div class="chooseus-block-one">
+                            <div class="icon-box"><img src="/aventour/assets/images/icons/icon-10.png" alt=""></div>
+                            <h3><a href="{{ url('/') }}" data-cms-field="chooseus_item_2_title">{{ $c['chooseus_item_2_title'] ?? 'Guides Near You' }}</a></h3>
+                            <x-rich-text data-cms-field="chooseus_item_2_body" :content="$c['chooseus_item_2_body'] ?? null" fallback="Get the best value with fair, transparent pricing and no hidden costs." />
+                        </div>
+                    </div>
+                    <div class="chooseus-block">
+                        <div class="chooseus-block-one">
+                            <div class="icon-box"><img src="/aventour/assets/images/icons/icon-11.png" alt=""></div>
+                            <h3><a href="{{ url('/') }}" data-cms-field="chooseus_item_3_title">{{ $c['chooseus_item_3_title'] ?? 'Safety Knowledge' }}</a></h3>
+                            <x-rich-text data-cms-field="chooseus_item_3_body" :content="$c['chooseus_item_3_body'] ?? null" fallback="Safe and simple payments for a stress-free booking experience." />
+                        </div>
+                    </div>
+                    <div class="chooseus-grid__stats">
+                        <div class="chooseus-block">
+                            <div class="chooseus-block-two">
+                                <div class="icon-box"><img src="/aventour/assets/images/icons/icon-12.png" alt=""></div>
+                                <div class="inner-box">
+                                    <h2>15+</h2>
+                                    <h3><a href="{{ url('/') }}">Years Experience</a></h3>
+                                    <p>Trusted travel expertise since 2010.</p>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12 chooseus-block">
-                                <div class="chooseus-block-one">
-                                    <div class="icon-box"><img src="/aventour/assets/images/icons/icon-10.png" alt=""></div>
-                                    <h3><a href="{{ url('/') }}" data-cms-field="chooseus_item_2_title">{{ $c['chooseus_item_2_title'] ?? 'Guides Near You' }}</a></h3>
-                                    <x-rich-text data-cms-field="chooseus_item_2_body" :content="$c['chooseus_item_2_body'] ?? null" fallback="Get the best value with fair, transparent pricing and no hidden costs." />
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12 chooseus-block">
-                                <div class="chooseus-block-one">
-                                    <div class="icon-box"><img src="/aventour/assets/images/icons/icon-11.png" alt=""></div>
-                                    <h3><a href="{{ url('/') }}" data-cms-field="chooseus_item_3_title">{{ $c['chooseus_item_3_title'] ?? 'Safety Knowledge' }}</a></h3>
-                                    <x-rich-text data-cms-field="chooseus_item_3_body" :content="$c['chooseus_item_3_body'] ?? null" fallback="Safe and simple payments for a stress-free booking experience." />
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 chooseus-block">
-                                <div class="chooseus-block-two">
-                                    <div class="icon-box"><img src="/aventour/assets/images/icons/icon-12.png" alt=""></div>
-                                    <div class="inner-box">
-                                        <h2>15+</h2>
-                                        <h3><a href="{{ url('/') }}">Years Experience</a></h3>
-                                        <p>Trusted travel expertise since 2010.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 chooseus-block">
-                                <div class="chooseus-block-two">
-                                    <div class="icon-box"><img src="/aventour/assets/images/icons/icon-13.png" alt=""></div>
-                                    <div class="inner-box">
-                                        <h2>97%</h2>
-                                        <h3><a href="{{ url('/') }}">Satisfied Travelers</a></h3>
-                                        <p>Backed by real traveler reviews.</p>
-                                    </div>
+                        </div>
+                        <div class="chooseus-block">
+                            <div class="chooseus-block-two">
+                                <div class="icon-box"><img src="/aventour/assets/images/icons/icon-13.png" alt=""></div>
+                                <div class="inner-box">
+                                    <h2>97%</h2>
+                                    <h3><a href="{{ url('/') }}">Satisfied Travelers</a></h3>
+                                    <p>Backed by real traveler reviews.</p>
                                 </div>
                             </div>
                         </div>
