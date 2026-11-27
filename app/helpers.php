@@ -1,5 +1,6 @@
 <?php
 
+use App\Support\AdminPanelPath;
 use App\Support\InternalLinker;
 use App\Support\RichText;
 use App\Support\SiteSettings;
@@ -109,5 +110,25 @@ if (! function_exists('absolute_url')) {
         }
 
         return rtrim(request()->getSchemeAndHttpHost(), '/').'/'.ltrim($url, '/');
+    }
+}
+
+if (! function_exists('admin_path')) {
+    function admin_path(?string $suffix = null): string
+    {
+        $base = app(AdminPanelPath::class)->current();
+
+        if ($suffix === null || $suffix === '') {
+            return $base;
+        }
+
+        return $base.'/'.ltrim($suffix, '/');
+    }
+}
+
+if (! function_exists('admin_asset')) {
+    function admin_asset(string $path): string
+    {
+        return asset('panel-assets/'.ltrim($path, '/'));
     }
 }

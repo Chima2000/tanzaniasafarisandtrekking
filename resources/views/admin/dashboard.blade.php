@@ -304,7 +304,7 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('admin/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ admin_asset('libs/apexcharts/apexcharts.min.js') }}"></script>
     <script>
         window.adminDashboardCharts = {
             bookingCount: {{ (int) $bookingCount }},
@@ -315,5 +315,5 @@
             publishedBlogPostCount: {{ (int) $publishedBlogPostCount }},
         };
     </script>
-    <script src="{{ asset('admin/assets/js/pages/admin-dashboard.init.js') }}"></script>
+    <script src="{{ admin_asset('js/pages/admin-dashboard.init.js') }}"></script>
 @endpush

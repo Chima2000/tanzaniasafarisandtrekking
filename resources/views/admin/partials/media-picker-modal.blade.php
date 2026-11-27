@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ asset('admin/assets/css/media-library.css') }}?v={{ filemtime(public_path('admin/assets/css/media-library.css')) }}">
+<link rel="stylesheet" href="{{ admin_asset('css/media-library.css') }}?v={{ filemtime(public_path('panel-assets/css/media-library.css')) }}">
 <div
     class="klt-media-picker-overlay"
     data-media-picker

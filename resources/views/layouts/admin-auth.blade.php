@@ -7,10 +7,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('logo/tanzania-safaris-and-trekking-logo.png') }}" type="image/png">
     <link rel="apple-touch-icon" href="{{ asset('logo/tanzania-safaris-and-trekking-logo.png') }}">
-    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin/assets/css/brand-theme.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ admin_asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ admin_asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ admin_asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ admin_asset('css/brand-theme.css') }}" rel="stylesheet" type="text/css" />
     <link href="/aventour/assets/css/ajax-loader.css?v={{ filemtime(public_path('aventour/assets/css/ajax-loader.css')) }}" rel="stylesheet" type="text/css" />
 </head>
 <body class="auth-login-page">
@@ -30,8 +30,8 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/auth.js') }}"></script>
+    <script src="{{ admin_asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ admin_asset('js/auth.js') }}"></script>
     <script src="/aventour/assets/js/ajax-loader.js?v={{ filemtime(public_path('aventour/assets/js/ajax-loader.js')) }}"></script>
     @include('partials.whatsapp-button')
 </body>

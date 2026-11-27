@@ -3,7 +3,7 @@
     $greeting = $hour < 12 ? 'Good Morning' : ($hour < 18 ? 'Good Afternoon' : 'Good Evening');
     $adminName = auth()->user()->name;
     $adminEmail = auth()->user()->email;
-    $avatar = asset('admin/assets/images/users/avatar-1.jpg');
+    $avatar = admin_asset('images/users/avatar-1.jpg');
 @endphp
 {{-- Top Bar Start --}}
 <div class="topbar d-print-none">

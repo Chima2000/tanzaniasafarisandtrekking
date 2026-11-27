@@ -56,6 +56,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin Panel Path
+    |--------------------------------------------------------------------------
+    |
+    | URI prefix for the admin panel (no leading/trailing slashes). Keep this
+    | non-guessable in production. Common paths like /admin return 404.
+    |
+    */
+
+    'admin_path' => trim((string) env('ADMIN_PATH', 'admin'), '/'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

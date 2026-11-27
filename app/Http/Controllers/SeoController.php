@@ -13,7 +13,6 @@ class SeoController extends Controller
         $lines = [
             'User-agent: *',
             'Allow: /',
-            'Disallow: /admin/',
             'Disallow: /search/suggest/',
             '',
             'Sitemap: '.$host.'/sitemap.xml',

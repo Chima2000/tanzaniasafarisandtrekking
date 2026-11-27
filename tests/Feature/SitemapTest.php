@@ -25,12 +25,15 @@ it('serves an xml sitemap with core and content urls', function () {
     $response->assertSee(route('blog.show', $post->slug), false);
 });
 
-it('serves a robots file that points at the sitemap and blocks admin', function () {
+it('serves a robots file that points at the sitemap without revealing the admin path', function () {
+    $adminPath = trim((string) config('app.admin_path'), '/');
+
     $response = $this->get(route('robots_txt'));
 
     $response->assertOk();
     $response->assertHeader('content-type', 'text/plain; charset=UTF-8');
-    $response->assertSee('Disallow: /admin/', false);
+    $response->assertDontSee('Disallow: /'.$adminPath.'/', false);
+    $response->assertDontSee('/admin/', false);
     $response->assertSee('Sitemap: ', false);
     $response->assertSee('/sitemap.xml', false);
 });

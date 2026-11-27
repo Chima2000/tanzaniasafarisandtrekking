@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\BookingRequest;
+use App\Support\AdminPanelPath;
 use App\Support\JsonLd;
 use App\Support\ManagedPageContent;
 use App\Support\PageSeo;
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton(SiteSettings::class);
+        $this->app->singleton(AdminPanelPath::class);
         $this->app->singleton(ManagedPageContent::class);
     }
 

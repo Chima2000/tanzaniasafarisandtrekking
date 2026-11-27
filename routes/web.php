@@ -58,7 +58,9 @@ Route::post('/book-now', [BookNowController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('book-now.store');
 
-Route::prefix('admin')->name('admin.')->middleware('noindex')->group(function () {
+$adminPath = admin_path();
+
+Route::prefix($adminPath)->name('admin.')->middleware('noindex')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminLoginController::class, 'create'])->name('login');
         Route::post('/login', [AdminLoginController::class, 'store'])->name('login.store');
@@ -70,6 +72,7 @@ Route::prefix('admin')->name('admin.')->middleware('noindex')->group(function ()
 
         Route::get('/settings', [AdminSiteSettingController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [AdminSiteSettingController::class, 'update'])->name('settings.update');
+        Route::put('/settings/admin-path', [AdminSiteSettingController::class, 'updateAdminPath'])->name('settings.admin-path.update');
 
         Route::get('/notifications', [AdminNotificationRecipientController::class, 'index'])->name('notifications.index');
         Route::post('/notifications', [AdminNotificationRecipientController::class, 'store'])->name('notifications.store');

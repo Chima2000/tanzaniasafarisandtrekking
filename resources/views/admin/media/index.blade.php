@@ -3,8 +3,8 @@
 @section('title', 'Media Library')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('admin/assets/css/media-library.css') }}?v={{ filemtime(public_path('admin/assets/css/media-library.css')) }}">
-<link rel="stylesheet" href="{{ asset('admin/assets/libs/sweetalert2/sweetalert2.min.css') }}">
+<link rel="stylesheet" href="{{ admin_asset('css/media-library.css') }}?v={{ filemtime(public_path('panel-assets/css/media-library.css')) }}">
+<link rel="stylesheet" href="{{ admin_asset('libs/sweetalert2/sweetalert2.min.css') }}">
 @endpush
 
 @section('content')
@@ -333,6 +333,6 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('admin/assets/libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
-<script src="{{ asset('admin/assets/js/media-library.js') }}?v={{ filemtime(public_path('admin/assets/js/media-library.js')) }}"></script>
+<script src="{{ admin_asset('libs/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="{{ admin_asset('js/media-library.js') }}?v={{ filemtime(public_path('panel-assets/js/media-library.js')) }}"></script>
 @endpush

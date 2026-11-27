@@ -143,4 +143,57 @@
             </div>
         </div>
     </form>
+
+    <form method="POST" action="{{ route('admin.settings.admin-path.update') }}" class="mt-1" onsubmit="return confirm('Change the admin login path now? Bookmark the new URL after saving.');">
+        @csrf
+        @method('PUT')
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-warning">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Admin login path</h4>
+                    </div>
+                    <div class="card-body pt-0">
+                        <p class="text-muted">
+                            Change this anytime. Common names like <code>admin</code> or <code>login</code> are blocked and show a 404.
+                            After saving, use the new URL immediately — the old path stops working.
+                        </p>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="admin_panel_path">Path segment</label>
+                            <div class="input-group">
+                                <span class="input-group-text">{{ url('/') }}/</span>
+                                <input
+                                    type="text"
+                                    class="form-control @error('admin_panel_path') is-invalid @enderror"
+                                    id="admin_panel_path"
+                                    name="admin_panel_path"
+                                    value="{{ old('admin_panel_path', $adminPanelPath) }}"
+                                    pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+                                    minlength="6"
+                                    maxlength="64"
+                                    required
+                                    autocomplete="off"
+                                    spellcheck="false"
+                                >
+                                <span class="input-group-text">/login</span>
+                                @error('admin_panel_path')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-text">Lowercase letters, numbers, and hyphens only (6–64 characters).</div>
+                        </div>
+
+                        <div class="alert alert-light border mb-3">
+                            <div class="fw-semibold mb-1">Current login URL</div>
+                            <code class="user-select-all">{{ session('admin_login_url', $adminLoginUrl) }}</code>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">Update login path</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 @endsection
