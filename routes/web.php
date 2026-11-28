@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MediaUploadController as AdminMediaUploadControll
 use App\Http\Controllers\Admin\NotificationRecipientController as AdminNotificationRecipientController;
 use App\Http\Controllers\Admin\PackageController as AdminPackageController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\SitemapController as AdminSitemapController;
 use App\Http\Controllers\Admin\SiteSettingController as AdminSiteSettingController;
 use App\Http\Controllers\Admin\WhatsappWidgetController as AdminWhatsappWidgetController;
@@ -69,6 +70,9 @@ Route::prefix($adminPath)->name('admin.')->middleware('noindex')->group(function
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/logout', [AdminLoginController::class, 'destroy'])->name('logout');
         Route::get('/', AdminDashboardController::class)->name('dashboard');
+
+        Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
 
         Route::get('/settings', [AdminSiteSettingController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [AdminSiteSettingController::class, 'update'])->name('settings.update');

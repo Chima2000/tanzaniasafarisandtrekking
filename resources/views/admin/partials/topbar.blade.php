@@ -1,9 +1,10 @@
 @php
     $hour = (int) now()->format('G');
     $greeting = $hour < 12 ? 'Good Morning' : ($hour < 18 ? 'Good Afternoon' : 'Good Evening');
-    $adminName = auth()->user()->name;
-    $adminEmail = auth()->user()->email;
-    $avatar = admin_asset('images/users/avatar-1.jpg');
+    $adminUser = auth()->user();
+    $adminName = $adminUser->name;
+    $adminEmail = $adminUser->email;
+    $avatar = $adminUser->avatarUrl();
 @endphp
 {{-- Top Bar Start --}}
 <div class="topbar d-print-none">
@@ -96,6 +97,9 @@
                         </div>
                         <div class="dropdown-divider mt-0"></div>
                         <small class="text-muted px-2 pb-1 d-block">Account</small>
+                        <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
+                            <i class="las la-user fs-18 me-1 align-text-bottom"></i> My Profile
+                        </a>
                         <a class="dropdown-item" href="{{ route('admin.settings.edit') }}">
                             <i class="las la-cog fs-18 me-1 align-text-bottom"></i> Site Settings
                         </a>

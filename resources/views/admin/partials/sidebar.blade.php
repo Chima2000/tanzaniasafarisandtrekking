@@ -7,6 +7,7 @@
     $isBookings = request()->routeIs('admin.bookings.*');
     $isContacts = request()->routeIs('admin.contacts.*');
     $isSettings = request()->routeIs('admin.settings.*');
+    $isProfile = request()->routeIs('admin.profile.*');
     $isNotifications = request()->routeIs('admin.notifications.*');
     $isSitemap = request()->routeIs('admin.sitemap.*');
     $isWhatsapp = request()->routeIs('admin.whatsapp.*');
@@ -124,6 +125,12 @@
                             <div class="border_right"></div>
                         </small>
                         <span>Settings</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ $isProfile ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}">
+                            <i class="iconoir-profile-circle menu-icon"></i>
+                            <span>My Profile</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ $isSettings ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}">
